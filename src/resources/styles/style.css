@@ -1,4 +1,4 @@
-.text-input{
+/*.text-input{
     -fx-background-color: rgba(0,0,0,0);
     -fx-border-width: 0 0 1 0;
     -fx-border-color: #616161;
@@ -46,4 +46,62 @@
     -fx-text-size: 18;
     -fx-text-fill: #828181;
     -fx-font-weight: bold;
+}
+*/
+.button {
+  -fx-border-width: 0;
+  -fx-border-radius: 4;
+  -fx-background-color: #920709;
+}
+.button:hover, .button:active, .button:focus, .button:focused {
+  -fx-background-color: #ffffff;
+  -fx-border-color: #920709;
+  -fx-border-width: 1;
+  -fx-text-fill: #F7F7F7;
+}
+
+
+/*navbar */
+.navbar {
+  -fx-border-color: #920709;
+  -fx-background-color: #920709;
+  -fx-text-fill: #F7F7F7;
+}
+
+.navbar, .navbar .context-menu, .navbar .menu, .navbar .menu-item, .navbar .menu .label, .navbar .menu-item .label {
+  -fx-background-color: #920709;
+}
+
+.navbar .context-menu {
+  -fx-padding: 0;
+}
+
+.navbar .context-menu .menu-item {
+  -fx-padding: 5;
+}
+
+.navbar .menu:focus, .navbar .menu:focused, .navbar .menu:active, .navbar .menu:hover,
+.navbar .menu-item:focus, .navbar .menu-item:focused, .navbar .menu-item:active, .navbar .menu-item:hover,
+.navbar .menu:focus > .label, .navbar .menu:focused > .label, .navbar .menu:active > .label, .navbar .menu:hover > .label,
+.navbar .menu-item:focus > .label, .navbar .menu-item:focused > .label, .navbar .menu-item:active > .label, .navbar .menu-item:hover > .label {
+  -fx-background-color: #920709;
+}
+
+.navbar .context-menu {
+  -fx-border-width: 0 0 1 0;
+  -fx-border-color: #920709;
+}
+
+.navbar .label {
+  -fx-text-fill: #F7F7F7;
+}
+
+.navbar .split-menu-button .arrow-button .arrow {
+  -fx-text-fill: #F7F7F7;
+  -fx-background-color: #F7F7F7;
+}
+
+.navbar .split-menu-button, .navbar .split-menu-button .label, .navbar .split-menu-button .arrow-button {
+  -fx-background-color: #920709;
+  -fx-padding: 2;
 }
