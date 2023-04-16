@@ -1,0 +1,49 @@
+.text-input{
+    -fx-background-color: rgba(0,0,0,0);
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: #616161;
+}
+
+.text-input:focused{
+    -fx-border-color: #ff5c5c;
+}
+
+
+.menu-buttons{
+    -fx-background-color:  #EBE8F9;
+}
+
+.selected:focused{
+    -fx-border-color: #ffbdbd;
+    -fx-border-width: 0 3 0 0;
+}
+
+.selected:hover{
+    -fx-background-color: #f0f0f0;
+    -fx-cursor: hand;
+}
+
+.update-button{
+    -fx-background-color: #ba6e6e;
+    -fx-background-radius: 30;
+}
+
+.update:hover{
+    -fx-background-color: #ff4d4d;
+}
+
+.numbers-input{
+    -fx-background-color: rgba(0,0,0,0);
+    -fx-border-width: 0 0 2 0;
+    -fx-border-color: #828181;
+    -fx-text-fill: #828181;
+    -fx-font-weight: bold;
+}
+
+.numbers:focused{
+    -fx-border-color: #ff5c5c;
+    -fx-border-width: 0 0 2 0;
+    -fx-text-size: 18;
+    -fx-text-fill: #828181;
+    -fx-font-weight: bold;
+}
