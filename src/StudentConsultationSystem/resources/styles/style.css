@@ -105,3 +105,11 @@
   -fx-background-color: #920709;
   -fx-padding: 2;
 }
+
+.form-wrapper {
+  -fx-background-color: #FFFFFF;
+  -fx-padding: 20;
+  -fx-border-radius: 5;
+  -fx-border-width: 1;
+  -fx-border-color: #222222;
+}

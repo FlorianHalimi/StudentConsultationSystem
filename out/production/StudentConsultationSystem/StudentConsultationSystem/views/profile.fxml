@@ -9,27 +9,32 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="685.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<VBox minHeight="400.0" minWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="StudentConsultationSystem.controllers.ProfileController">
    <children>
-       <Label layoutX="18.0" layoutY="14.0" text="Profile Settings" textFill="#616161">
-           <font>
-               <Font name="System Bold" size="24.0" />
-           </font>
-         <VBox.margin>
-            <Insets left="15.0" top="15.0" />
-         </VBox.margin>
-       </Label>
-       <VBox prefHeight="180.0" prefWidth="600.0" translateY="45.0">
+      <HBox alignment="CENTER_LEFT">
+         <children>
+             <Label text="Profile Settings" textFill="#616161">
+                 <font>
+                     <Font name="System Bold" size="24.0" />
+                 </font>
+               <HBox.margin>
+                  <Insets bottom="10.0" left="10.0" top="10.0" />
+               </HBox.margin>
+             </Label>
+             <Label alignment="CENTER_RIGHT" text="Profile updated succsessfully!" visible="false">
+               <HBox.margin>
+                  <Insets bottom="10.0" left="50.0" right="10.0" top="20.0" />
+               </HBox.margin>
+            </Label>
+         </children>
+      </HBox>
+       <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
            <children>
-               <Label text="Profile Details" textFill="#616161">
-                   <font>
-                       <Font name="System Bold" size="18.0" />
-                   </font>
-               </Label>
                <GridPane alignment="BOTTOM_CENTER" hgap="15.0" vgap="5.0" VBox.vgrow="ALWAYS">
                    <columnConstraints>
                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="163.0" minWidth="10.0" prefWidth="163.0" />
@@ -37,6 +42,7 @@
                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="31.0" minWidth="10.0" prefWidth="31.0" />
                    </columnConstraints>
                    <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -48,36 +54,36 @@
                        <Insets />
                    </opaqueInsets>
                    <children>
-                       <Label text="ID" GridPane.valignment="CENTER" />
-                       <Label text="Name" GridPane.rowIndex="1" />
-                       <Label text="Username" GridPane.rowIndex="2" />
-                       <TextField style="-fx-border-width: 0 0 1 0;" GridPane.columnIndex="1" />
-                       <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                       <Label text="ID" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                       <Label text="Name" GridPane.rowIndex="2" />
+                       <Label text="Username" GridPane.rowIndex="3" />
+                       <TextField style="-fx-border-width: 0 0 1 0;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                       <ImageView fitHeight="21.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER">
-                           <image>
-                               <Image url="@../resources/images/padlock.png" />
-                           </image>
-                       </ImageView>
+                       <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
                        <ImageView fitHeight="21.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                            <image>
                                <Image url="@../resources/images/padlock.png" />
                            </image>
                        </ImageView>
+                       <ImageView fitHeight="21.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                           <image>
+                               <Image url="@../resources/images/padlock.png" />
+                           </image>
+                       </ImageView>
+                     <Label text="Profile Details" textFill="#616161">
+                         <font>
+                             <Font name="System Bold" size="18.0" />
+                         </font>
+                     </Label>
                    </children>
                </GridPane>
            </children>
          <VBox.margin>
-            <Insets left="20.0" />
+            <Insets bottom="10.0" left="20.0" />
          </VBox.margin>
        </VBox>
-       <VBox layoutX="25.0" layoutY="318.0" prefHeight="180.0" prefWidth="600.0" translateY="90.0">
+       <VBox VBox.vgrow="ALWAYS">
            <children>
-               <Label text="Contact Info" textFill="#616161">
-                   <font>
-                       <Font name="System Bold" size="18.0" />
-                   </font>
-               </Label>
                <GridPane alignment="BOTTOM_CENTER" hgap="15.0" vgap="5.0" VBox.vgrow="ALWAYS">
                    <columnConstraints>
                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="163.0" minWidth="10.0" prefWidth="163.0" />
@@ -85,6 +91,7 @@
                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="31.0" minWidth="10.0" prefWidth="31.0" />
                    </columnConstraints>
                    <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -96,32 +103,43 @@
                        <Insets />
                    </opaqueInsets>
                    <children>
-                       <Label text="Email" GridPane.valignment="CENTER" />
-                       <Label text="Phone" GridPane.rowIndex="1" />
-                       <Label text="Website" GridPane.rowIndex="2" />
-                       <TextField style="-fx-border-width: 0 0 1 0;" GridPane.columnIndex="1" />
-                       <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                       <Label text="Email" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                       <Label text="Phone" GridPane.rowIndex="2" />
+                       <Label text="Website" GridPane.rowIndex="3" />
+                       <TextField style="-fx-border-width: 0 0 1 0;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                       <ImageView fitHeight="21.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER">
+                       <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                       <ImageView fitHeight="21.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                            <image>
                                <Image url="@../resources/images/padlock.png" />
                            </image>
                        </ImageView>
+                     <Label text="Contact Info" textFill="#616161">
+                         <font>
+                             <Font name="System Bold" size="18.0" />
+                         </font>
+                     </Label>
                    </children>
                </GridPane>
            </children>
          <VBox.margin>
-            <Insets left="20.0" />
+            <Insets bottom="10.0" left="20.0" />
          </VBox.margin>
        </VBox>
-       <Label layoutX="269.0" layoutY="23.0" text="Profile updated succsessfully!" visible="false" />
-       <Button fx:id="LoginButton" mnemonicParsing="false" prefHeight="31.0" prefWidth="129.0" style="-fx-background-color: #920709; -fx-background-radius: 15px;" text="Update Profile" textFill="WHITE" translateX="370.0" translateY="100.0">
-           <cursor>
-               <Cursor fx:constant="HAND" />
-           </cursor>
-           <font>
-               <Font name="Arial Black" size="12.0" />
-           </font>
-       </Button>
+      <HBox alignment="BOTTOM_CENTER" VBox.vgrow="ALWAYS">
+         <children>
+             <Button fx:id="LoginButton" alignment="CENTER" contentDisplay="BOTTOM" mnemonicParsing="false" prefHeight="31.0" prefWidth="129.0" style="-fx-background-color: #920709; -fx-background-radius: 15px;" text="Update Profile" textFill="WHITE">
+                 <cursor>
+                     <Cursor fx:constant="HAND" />
+                 </cursor>
+                 <font>
+                     <Font name="Arial Black" size="12.0" />
+                 </font>
+             </Button>
+         </children>
+         <VBox.margin>
+            <Insets bottom="10.0" />
+         </VBox.margin>
+      </HBox>
    </children>
 </VBox>

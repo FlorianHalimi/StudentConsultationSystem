@@ -26,7 +26,7 @@ public class LoginController implements Initializable {
             Parent parent = loader.load();
 
             MainController controller = loader.getController();
-            controller.setView(MainController.CALENDAR_VIEW);
+            controller.setView(MainController.EDIT_APPOINTMENT_VIEW);
 
             Stage primaryStage = (Stage) ((Node)e.getSource()).getScene().getWindow();
             Scene scene = new Scene(parent);

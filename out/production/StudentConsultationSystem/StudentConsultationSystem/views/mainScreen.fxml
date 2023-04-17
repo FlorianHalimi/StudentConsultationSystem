@@ -10,6 +10,7 @@
 <?import javafx.scene.control.SplitMenuButton?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
@@ -43,14 +44,26 @@
                     <menus>
                         <Menu mnemonicParsing="false" text="File">
                             <items>
-                                <MenuItem mnemonicParsing="false" text="Logout" />
-                                <MenuItem mnemonicParsing="false" text="Exit" />
+                                <MenuItem mnemonicParsing="false" onAction="#onLogOutMenuClick" text="Logout">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="L" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                           </accelerator></MenuItem>
+                                <MenuItem mnemonicParsing="false" onAction="#onExitMenuClick" text="Exit">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="X" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                           </accelerator></MenuItem>
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Edit">
                             <items>
-                                <MenuItem mnemonicParsing="false" text="Reschedule" />
-                                <MenuItem mnemonicParsing="false" text="Cancel" />
+                                <MenuItem mnemonicParsing="false" onAction="#onRescheduleMenuClick" text="Reschedule">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="R" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                           </accelerator></MenuItem>
+                                <MenuItem mnemonicParsing="false" onAction="#onCancelMenuClick" text="Cancel">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="C" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                           </accelerator></MenuItem>
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="View">
@@ -61,7 +74,10 @@
                         </Menu>
                         <Menu mnemonicParsing="false" text="Help">
                             <items>
-                                <MenuItem mnemonicParsing="false" text="About" />
+                                <MenuItem mnemonicParsing="false" onAction="#onAboutMenuClick" text="About">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="H" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                           </accelerator></MenuItem>
                             </items>
                         </Menu>
                     </menus>
@@ -81,7 +97,7 @@
                         <Image url="@../resources/images/profImg.png" />
                     </image>
                 </ImageView>
-                <Button contentDisplay="TOP" mnemonicParsing="false" prefHeight="45.0" prefWidth="250.0" text="Profile" textFill="WHITE" translateY="120.0">
+                <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#onProfileButtonClick" prefHeight="45.0" prefWidth="250.0" text="Profile" textFill="WHITE" translateY="120.0">
                     <graphic>
                         <ImageView fitHeight="21.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -90,7 +106,7 @@
                         </ImageView>
                     </graphic>
                 </Button>
-                <Button contentDisplay="TOP" mnemonicParsing="false" prefHeight="45.0" prefWidth="250.0" text="Calendar" textFill="WHITE" translateY="160.0">
+                <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#onCalendarButtonClick" prefHeight="45.0" prefWidth="250.0" text="Calendar" textFill="WHITE" translateY="160.0">
                     <graphic>
                         <ImageView fitHeight="21.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -99,7 +115,7 @@
                         </ImageView>
                     </graphic>
                 </Button>
-                <Button contentDisplay="TOP" mnemonicParsing="false" prefHeight="45.0" prefWidth="250.0" text="Sign out" textFill="WHITE" translateY="200.0">
+                <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#onLogoutButtonClick" prefHeight="45.0" prefWidth="250.0" text="Sign out" textFill="WHITE" translateY="200.0">
                     <graphic>
                         <ImageView fitHeight="21.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
                             <image>
