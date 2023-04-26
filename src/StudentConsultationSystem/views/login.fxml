@@ -22,15 +22,15 @@
                         <Font name="Arial Black" size="36.0" />
                     </font>
                 </Label>
-                <TextField fx:id="UserTextField" layoutX="170.0" layoutY="262.0" prefHeight="40.0" prefWidth="250.0" promptText="Username" style="-fx-background-color: #FFFFFD; -fx-background-radius: 0 45 45 0;">
+                <TextField fx:id="usernameField" layoutX="170.0" layoutY="262.0" prefHeight="40.0" prefWidth="250.0" promptText="Username" style="-fx-background-color: #FFFFFD; -fx-background-radius: 0 45 45 0;">
                     <font>
                         <Font size="14.0" />
                     </font></TextField>
-                <PasswordField fx:id="PasswordField" layoutX="170.0" layoutY="316.0" prefHeight="40.0" prefWidth="250.0" promptText="Password" style="-fx-background-color: #FFFFFD; -fx-background-radius: 0 45 45 0;">
+                <PasswordField fx:id="passwordField" layoutX="170.0" layoutY="316.0" prefHeight="40.0" prefWidth="250.0" promptText="Password" style="-fx-background-color: #FFFFFD; -fx-background-radius: 0 45 45 0;">
                     <font>
                         <Font size="14.0" />
                     </font></PasswordField>
-                <Button layoutX="292.0" layoutY="395.0" mnemonicParsing="false" onAction="#onLoginButtonClick" prefHeight="31.0" prefWidth="129.0" style="-fx-background-color: #920709; -fx-background-radius: 15px;" text="Log in" textFill="WHITE">
+                <Button fx:id="loginButton" layoutX="292.0" layoutY="395.0" mnemonicParsing="false" onAction="#onLoginButtonClick" prefHeight="31.0" prefWidth="129.0" style="-fx-background-color: #920709; -fx-background-radius: 15px;" text="Log in" textFill="WHITE">
                     <cursor>
                         <Cursor fx:constant="HAND" />
                     </cursor>

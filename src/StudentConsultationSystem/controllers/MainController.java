@@ -1,6 +1,8 @@
 package StudentConsultationSystem.controllers;
 
 import StudentConsultationSystem.components.AboutComponent;
+import StudentConsultationSystem.components.ErrorPopupComponent;
+import StudentConsultationSystem.utils.SessionManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,6 +11,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -22,13 +25,20 @@ public class MainController implements Initializable {
     public static final String PROFILE_VIEW = "profile";
     public static final String EDIT_APPOINTMENT_VIEW = "editAppointment";
     public static final String CANCEL_APPOINTMENT_VIEW = "cancelAppointment";
+    public static final String ADD_APPOINTMENT_VIEW = "addAppointment";
 
     private static final String VIEW_PATH = "../views";
     @FXML
     private VBox contentPane;
+    @FXML
+    private Label statusLabel;
+    CalendarController calendarController = new CalendarController();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        String statusText = "%s";
+        String professor = SessionManager.professor.getName();
+        statusLabel.setText(String.format(statusText,professor));
     }
 
     public void setView(String view)throws Exception{
@@ -49,6 +59,10 @@ public class MainController implements Initializable {
                 contentPane.setAlignment(Pos.TOP_LEFT);
                 break;
             case CANCEL_APPOINTMENT_VIEW:
+                pane = loader.load();
+                contentPane.setAlignment(Pos.TOP_LEFT);
+                break;
+            case ADD_APPOINTMENT_VIEW:
                 pane = loader.load();
                 contentPane.setAlignment(Pos.TOP_LEFT);
                 break;
@@ -87,12 +101,14 @@ public class MainController implements Initializable {
     @FXML
     public void onLogoutButtonClick(ActionEvent e){
         try{
+            ErrorPopupComponent.showLogOutInformation();
             Parent parent = FXMLLoader.load(getClass().getResource(viewPath("login")));
             Scene scene = new Scene(parent);
 
             Stage primaryStage = (Stage) ((Node) e.getSource()).getScene().getWindow();
             primaryStage.setScene(scene);
             primaryStage.show();
+
         }catch(Exception ex){
 
         }
@@ -138,5 +154,14 @@ public class MainController implements Initializable {
         } catch(Exception e){
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    public void onRefreshButtonClick(ActionEvent e) throws Exception {
+        calendarController.fillTables();
+    }
+    @FXML
+    public void onBackButtonClick(ActionEvent e) throws Exception {
+        this.setView(CALENDAR_VIEW);
     }
 }

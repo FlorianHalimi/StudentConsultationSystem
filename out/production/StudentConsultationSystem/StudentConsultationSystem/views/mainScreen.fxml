@@ -23,10 +23,31 @@
             <children>
                 <HBox prefHeight="10.0" styleClass="navbar" stylesheets="@../resources/styles/style.css">
                     <children>
+                  <Button mnemonicParsing="false" onAction="#onBackButtonClick">
+                     <graphic>
+                        <ImageView fitHeight="21.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/images/backicon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#onRefreshButtonClick">
+                     <graphic>
+                        <ImageView fitHeight="21.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/images/refreshIcon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
                         <Label text="Sistemi per menaxhimin e konsultimeve me studente" textFill="#616161">
                             <font>
                                 <Font name="System Bold" size="14.0" />
                             </font>
+                     <padding>
+                        <Insets left="20.0" top="5.0" />
+                     </padding>
                         </Label>
                         <Region prefHeight="200.0" prefWidth="200.0" stylesheets="@../resources/styles/style.css" HBox.hgrow="ALWAYS" />
                         <SplitMenuButton mnemonicParsing="false" text="Lang">
@@ -97,6 +118,15 @@
                         <Image url="@../resources/images/profImg.png" />
                     </image>
                 </ImageView>
+            <HBox alignment="CENTER" prefWidth="250.0" translateY="80.0">
+               <children>
+                  <Label fx:id="statusLabel" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
                 <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#onProfileButtonClick" prefHeight="45.0" prefWidth="250.0" text="Profile" textFill="WHITE" translateY="120.0">
                     <graphic>
                         <ImageView fitHeight="21.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">

@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="StudentConsultationSystem.controllers.CancelAppointmentController">
+<VBox fx:id="contentPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="StudentConsultationSystem.controllers.CancelAppointmentController">
    <children>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
          <children>
@@ -23,7 +23,7 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <TextArea VBox.vgrow="ALWAYS" />
+                  <TextArea fx:id="textArea" wrapText="true" VBox.vgrow="ALWAYS" />
                </children>
                <HBox.margin>
                   <Insets left="10.0" top="10.0" />
@@ -40,17 +40,9 @@
             </StackPane>
          </children>
       </HBox>
-      <HBox alignment="BOTTOM_CENTER" spacing="150.0">
+      <HBox alignment="CENTER_RIGHT">
          <children>
-            <Button fx:id="LoginButton1" mnemonicParsing="false" prefHeight="31.0" prefWidth="129.0" style="-fx-background-color: #920709; -fx-background-radius: 15px;" text="Back" textFill="WHITE">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <font>
-                  <Font name="Arial Black" size="12.0" />
-               </font>
-            </Button>
-            <Button fx:id="LoginButton" mnemonicParsing="false" prefHeight="31.0" prefWidth="129.0" style="-fx-background-color: #920709; -fx-background-radius: 15px;" text="Finish" textFill="WHITE">
+            <Button fx:id="LoginButton" alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#onSendButtonClick" prefHeight="31.0" prefWidth="129.0" style="-fx-background-color: #920709; -fx-background-radius: 15px;" text="Send" textFill="WHITE">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -62,6 +54,9 @@
          <VBox.margin>
             <Insets bottom="10.0" top="10.0" />
          </VBox.margin>
+         <padding>
+            <Insets right="70.0" />
+         </padding>
       </HBox>
    </children>
 </VBox>
