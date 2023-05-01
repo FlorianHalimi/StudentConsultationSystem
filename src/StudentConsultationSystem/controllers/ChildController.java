@@ -1,5 +1,6 @@
 package StudentConsultationSystem.controllers;
 
+import StudentConsultationSystem.repositories.EditAppointmentRepository;
 import javafx.fxml.Initializable;
 
 public abstract class ChildController implements Initializable {
@@ -9,6 +10,9 @@ public abstract class ChildController implements Initializable {
     public CalendarController calendarParentController;
 
     public CancelAppointmentController cancelAppointmentParentController;
+    public EditAppointmentController editAppointmentController;
+
+    public LinkController linkController;
 
     public ProfileController changePasswordParentController;
 
@@ -31,6 +35,13 @@ public abstract class ChildController implements Initializable {
         this.cancelAppointmentParentController = cancelAppointmentController;
     }
 
+    public void setEditAppointmentController(EditAppointmentController editAppointmentController){
+        this.editAppointmentController = editAppointmentController;
+    }
+
+    public void setLinkController(LinkController linkController){
+        this.linkController = linkController;
+    }
     public void setChangePasswordParentController(ProfileController changePasswordController){
         this.changePasswordParentController = changePasswordController;
     }

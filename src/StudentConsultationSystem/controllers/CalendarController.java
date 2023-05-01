@@ -2,36 +2,27 @@ package StudentConsultationSystem.controllers;
 
 import StudentConsultationSystem.components.ErrorPopupComponent;
 import StudentConsultationSystem.models.Konsultimet;
-import StudentConsultationSystem.models.Student;
-import StudentConsultationSystem.repositories.StudentRepository;
+import StudentConsultationSystem.repositories.AddAppointmentRepository;
+import StudentConsultationSystem.repositories.EditAppointmentRepository;
 import StudentConsultationSystem.utils.DbHelper;
 import StudentConsultationSystem.utils.SessionManager;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 import java.net.URL;
-import java.security.spec.ECField;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
-import java.util.Stack;
+import java.util.*;
 
 public class CalendarController extends ChildController{
 
@@ -47,70 +38,95 @@ public class CalendarController extends ChildController{
     @FXML
     private TableColumn<Konsultimet, String> todayStudentiColumn;
     @FXML
-    private TableColumn<Konsultimet, String> todayTimeColumn;
+    private TableColumn<Konsultimet, LocalDateTime> todayTimeColumn;
     @FXML
     private TableColumn<Konsultimet, String> otherDaysLendaColumn;
 
     @FXML
     private TableColumn<Konsultimet, String> otherDaysStudentColumn;
     @FXML
-    private TableColumn<Konsultimet, String> otherDaysTimeColumn;
+    private TableColumn<Konsultimet, LocalDateTime> otherDaysTimeColumn;
+
+    @FXML
+    private Button cancelButton;
+
+    @FXML
+    private Button editButton;
+
+    @FXML
+    private Button refreshButton;
+
+    @FXML
+    private Button sendLinkButton;
+
 
     public static final String EDIT_APPOINTMENT_VIEW = "editAppointment";
     public static final String CANCEL_APPOINTMENT_VIEW = "cancelAppointment";
+    public static final String CALENDAR_VIEW = "calendar";
     private static final String VIEW_PATH = "../views";
     @FXML
     private VBox contentPane;
 
-    private String studentEmail;
-
     private String professorName = SessionManager.professor.getName();
+    @FXML
+    private ObservableList<Konsultimet> allAppointments = FXCollections.observableArrayList();
+    private AddAppointmentRepository addAppointmentRepository = new AddAppointmentRepository();
+    private EditAppointmentRepository editAppointmentRepository = new EditAppointmentRepository();
+
+    private DialogPane dialogPane;
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.todayLendaColumn.setCellValueFactory(new PropertyValueFactory<>("lenda"));
         this.todayStudentiColumn.setCellValueFactory(new PropertyValueFactory<>("student"));
-        this.todayTimeColumn.setCellValueFactory(new PropertyValueFactory<>("data"));
+        this.todayTimeColumn.setCellValueFactory(new PropertyValueFactory<>("fillimi"));
         this.otherDaysLendaColumn.setCellValueFactory(new PropertyValueFactory<>("lenda"));
         this.otherDaysStudentColumn.setCellValueFactory(new PropertyValueFactory<>("student"));
-        this.otherDaysTimeColumn.setCellValueFactory(new PropertyValueFactory<>("data"));
+        this.otherDaysTimeColumn.setCellValueFactory(new PropertyValueFactory<>("fillimi"));
 
         try{
             fillTables();
         }catch(Exception ex){
-            ErrorPopupComponent.show(ex);
+            ex.printStackTrace();
+        }
+        todayTableView.setOnMouseClicked(e -> {
+            sendLinkButton.setDisable(false);
+            cancelButton.setDisable(true);
+            editButton.setDisable(true);
+        });
+
+        otherDaysTableView.setOnMouseClicked(e -> {
+            cancelButton.setDisable(false);
+            editButton.setDisable(false);
+            sendLinkButton.setDisable(true);
+        });
+
+        try {
+            allAppointments = addAppointmentRepository.getAllKonsultimet();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
 
     }
-//    private Konsultimet parseRes(ResultSet res) throws SQLException {
-//        Integer konsultimi_id = res.getInt("Konsultimi_Id");
-//        String profesori = res.getString("profesori");
-//        String studenti = res.getString("studenti");
-//        String lenda = res.getString("lenda");
-//        String fillimi = res.getString("fillimi");
-//        String fundi = res.getString("fundi");
-//        String data = res.getString("dita");
-//        String email = res.getString("email");
-//
-//        return new Konsultimet(profesori,studenti,lenda,fillimi,fundi,data,email);
-//    }
-private static Konsultimet parseRes(ResultSet res) throws SQLException {
+private Konsultimet parseRes(ResultSet res) throws SQLException {
+    Integer konsultimiID = res.getInt("Konsultimi_id");
     String profesori = res.getString("profesori");
     String studenti = res.getString("studenti");
     String lenda = res.getString("lenda");
     String email = res.getString("email");
     LocalDateTime start = res.getTimestamp("fillimi").toLocalDateTime();
     LocalDateTime end = res.getTimestamp("fundi").toLocalDateTime();
-    LocalDateTime creatDate = res.getTimestamp("dita").toLocalDateTime();
+    LocalDateTime data = res.getTimestamp("dita").toLocalDateTime();
 
-    return new Konsultimet(profesori,studenti,lenda,start,end,creatDate,email);
+    return new Konsultimet(profesori,studenti,lenda,konsultimiID,start,end,data,email);
 }
     public List<Konsultimet> getKonsultimet(boolean thisDay) throws Exception{
         ArrayList<Konsultimet> konsultimet = new ArrayList<>();
         LocalDate today =LocalDate.now();
-        String strToday = today.toString();
 
         if(thisDay){
-            String sql ="SELECT * FROM konsultimet WHERE profesori = '" + professorName + "' and fillimi like '" + strToday + "%';";
+            String sql ="SELECT * FROM konsultimet WHERE Profesori = '" + professorName + "' and fillimi like '" + today + "%';";
             try{
                 Connection conn = DbHelper.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql);
@@ -122,7 +138,7 @@ private static Konsultimet parseRes(ResultSet res) throws SQLException {
                 ErrorPopupComponent.show(ex);
             }
         }else{
-            String sql = "select * from konsultimet where profesori = '" + professorName + "' and DATE(fillimi) > CURDATE();";
+            String sql = "select * from konsultimet where Profesori = '" + professorName + "' and DATE(fillimi) > CURDATE();";
             try {
                 Connection conn = DbHelper.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql);
@@ -154,11 +170,15 @@ private static Konsultimet parseRes(ResultSet res) throws SQLException {
         loader.setLocation(getClass().getResource(this.viewPath(view)));
         Pane pane = null;
         switch(view){
-        case EDIT_APPOINTMENT_VIEW:
+            case EDIT_APPOINTMENT_VIEW:
                 pane = loader.load();
                 contentPane.setAlignment(Pos.TOP_LEFT);
                 break;
             case CANCEL_APPOINTMENT_VIEW:
+                pane = loader.load();
+                contentPane.setAlignment(Pos.TOP_LEFT);
+                break;
+            case CALENDAR_VIEW:
                 pane = loader.load();
                 contentPane.setAlignment(Pos.TOP_LEFT);
                 break;
@@ -178,53 +198,106 @@ private static Konsultimet parseRes(ResultSet res) throws SQLException {
         return VIEW_PATH + "/" + view + ".fxml";
     }
 
+
+
     @FXML
-    public void onRefreshOption(ActionEvent e) throws Exception {
+    public void onRefreshButtonClick(ActionEvent e) throws Exception {
         fillTables();
     }
 
     @FXML
-    public void onCancelOption(ActionEvent e)throws Exception{
-        Konsultimet selected =todayTableView.getSelectionModel().getSelectedItem();
-        if(selected == null){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("ERROR");
-            alert.setContentText("No consultation is selected ! Please select a consultation for cancel-ing.");
-            alert.showAndWait();
-            return;
-        }
-        try {
-            this.setView(CANCEL_APPOINTMENT_VIEW);
-        }catch(Exception ex){
-            ErrorPopupComponent.show(ex);
+    public void onCancelButtonClick(ActionEvent e) throws Exception {
+        Konsultimet selectedItem = otherDaysTableView.getSelectionModel().getSelectedItem();
+        int selectedIndex = otherDaysTableView.getSelectionModel().getSelectedIndex();
+        int konsultimiID = selectedItem.getKonsultimi_id();
+
+        Alert deleteConfirmation = new Alert(Alert.AlertType.CONFIRMATION);
+        deleteConfirmation.setTitle("Konfirmimi i anulimit");
+        deleteConfirmation.setContentText("A jeni te sigurt qe doni te anuloni kete konsultim?");
+        Optional<ButtonType> result = deleteConfirmation.showAndWait();
+
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            allAppointments.remove(selectedItem);
+            addAppointmentRepository.DeleteAppointment(konsultimiID);
+            Alert appointmentCancellation = new Alert(Alert.AlertType.INFORMATION);
+            appointmentCancellation.setTitle("Konsultimi u anulua");
+            String appointmentCancellationContext = "Konsultimi u anulua.";
+            appointmentCancellation.setContentText(appointmentCancellationContext);
+            otherDaysTableView.getItems().remove(selectedIndex);
+            allAppointments.remove(selectedItem);
+            appointmentCancellation.showAndWait();
+
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("../views/cancelAppointment.fxml"));
+                Pane pane = loader.load();
+                CancelAppointmentController controller =loader.getController();
+                controller.oldAppointment(selectedItem);
+                contentPane.getChildren().clear();
+                contentPane.getChildren().add(pane);
+                contentPane.setVgrow(pane, Priority.ALWAYS);
+                contentPane.setAlignment(Pos.TOP_LEFT);
+                Alert notify = new Alert(Alert.AlertType.INFORMATION);
+                notify.setTitle("Informacion");
+                notify.setContentText("Ju duhet te tregoni arsyen e anulimit te konsulimit.");
+                notify.showAndWait();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
     @FXML
-    public void onEditOption(ActionEvent e) throws Exception{
-        Konsultimet selected =todayTableView.getSelectionModel().getSelectedItem();
-        if(selected == null){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("ERROR");
-            alert.setContentText("No consultation is selected ! Please select a consultation for edit-ing.");
-            alert.showAndWait();
-            return;
-        }
-        try {
-            this.setView(EDIT_APPOINTMENT_VIEW);
-        }catch(Exception ex){
-            ErrorPopupComponent.show(ex);
+    public void onEditButtonClick(ActionEvent e){
+        Konsultimet appointmentToModify = otherDaysTableView.getSelectionModel().getSelectedItem();
+        Alert editConfirmation = new Alert(Alert.AlertType.CONFIRMATION);
+        editConfirmation.setTitle("Konfirmimi i ndryshimit");
+        editConfirmation.setContentText("A jeni te sigurt qe doni te beni ndonje ndryshim rreth ketij konsultimi?");
+        DialogPane dialogPane = editConfirmation.getDialogPane();
+        dialogPane.getStylesheets().add(
+                getClass().getResource("../resources/styles/style.css").toExternalForm());
+        dialogPane.getStyleClass().add("alert");
+        Optional<ButtonType> result = editConfirmation.showAndWait();
+
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("../views/editAppointment.fxml"));
+                Pane pane = loader.load();
+                EditAppointmentController controller =loader.getController();
+                controller.oldAppointment(appointmentToModify);
+                contentPane.getChildren().clear();
+                contentPane.getChildren().add(pane);
+                contentPane.setVgrow(pane, Priority.ALWAYS);
+                contentPane.setAlignment(Pos.TOP_LEFT);
+                Alert notify = new Alert(Alert.AlertType.INFORMATION);
+                notify.setTitle("Informacion");
+                notify.setContentText("Ju duhet te tregoni arsyen e anulimit te konsulimit.");
+                notify.showAndWait();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
-    public String getEmail(){
-        Konsultimet konsultimi = todayTableView.getSelectionModel().getSelectedItem();
+    @FXML
+    public void onSendLinkButtonClick(ActionEvent e) throws Exception {
+        Konsultimet appointmentToSendLink = todayTableView.getSelectionModel().getSelectedItem();
 
-        if(konsultimi != null){
-            studentEmail = konsultimi.getEmail();
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("../views/link.fxml"));
+                Pane pane = loader.load();
+                LinkController controller =loader.getController();
+                controller.oldAppointment(appointmentToSendLink);
+                contentPane.getChildren().clear();
+                contentPane.getChildren().add(pane);
+                contentPane.setVgrow(pane, Priority.ALWAYS);
+                contentPane.setAlignment(Pos.TOP_LEFT);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
-        return studentEmail;
-    }
 
 
 }

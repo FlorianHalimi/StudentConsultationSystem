@@ -1,6 +1,5 @@
 package StudentConsultationSystem.controllers;
 
-import StudentConsultationSystem.components.AboutComponent;
 import StudentConsultationSystem.components.ErrorPopupComponent;
 import StudentConsultationSystem.utils.SessionManager;
 import javafx.event.ActionEvent;
@@ -26,13 +25,13 @@ public class MainController implements Initializable {
     public static final String EDIT_APPOINTMENT_VIEW = "editAppointment";
     public static final String CANCEL_APPOINTMENT_VIEW = "cancelAppointment";
     public static final String ADD_APPOINTMENT_VIEW = "addAppointment";
+    public static final String STATISTICS_VIEW = "pieChart";
 
     private static final String VIEW_PATH = "../views";
     @FXML
     private VBox contentPane;
     @FXML
     private Label statusLabel;
-    CalendarController calendarController = new CalendarController();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -63,6 +62,10 @@ public class MainController implements Initializable {
                 contentPane.setAlignment(Pos.TOP_LEFT);
                 break;
             case ADD_APPOINTMENT_VIEW:
+                pane = loader.load();
+                contentPane.setAlignment(Pos.TOP_LEFT);
+                break;
+            case STATISTICS_VIEW:
                 pane = loader.load();
                 contentPane.setAlignment(Pos.TOP_LEFT);
                 break;
@@ -113,55 +116,17 @@ public class MainController implements Initializable {
 
         }
     }
-
-    @FXML
-    public void onLogOutMenuClick (ActionEvent ev){
-        try{
-
-        } catch(Exception e){
-            e.printStackTrace();
-        }
-    }
-    @FXML
-    public void onExitMenuClick (ActionEvent ev){
-        try{
-
-        } catch(Exception e){
-            e.printStackTrace();
-        }
-    }
-    @FXML
-    public void onRescheduleMenuClick(ActionEvent e){
-        try{
-            this.setView(EDIT_APPOINTMENT_VIEW);
-        }catch(Exception ex){
-            ex.printStackTrace();
-        }
-    }
-    @FXML
-    public void onCancelMenuClick(ActionEvent e){
-        try{
-            this.setView(CANCEL_APPOINTMENT_VIEW);
-        }catch(Exception ex){
-            ex.printStackTrace();
-        }
-    }
-
-    @FXML
-    public void onAboutMenuClick (ActionEvent ev){
-        try{
-             new AboutComponent().showDialog();
-        } catch(Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    public void onRefreshButtonClick(ActionEvent e) throws Exception {
-        calendarController.fillTables();
-    }
     @FXML
     public void onBackButtonClick(ActionEvent e) throws Exception {
         this.setView(CALENDAR_VIEW);
+    }
+
+    @FXML
+    public void onStatisticsButtonClick(ActionEvent e) throws Exception {
+        try {
+            this.setView(STATISTICS_VIEW);
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
     }
 }

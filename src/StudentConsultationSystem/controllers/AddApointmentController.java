@@ -79,21 +79,13 @@ public class AddApointmentController implements Initializable {
     ObservableList<String> prof3 = FXCollections.observableArrayList("Arkitektura e kompjuterve", "Programimi ne internet");
     ObservableList<String> prof4 = FXCollections.observableArrayList("Gjuhe programuese", "Algoritmet dhe strukturat e te dhenave","Praktika Profesionale");
 
-    private AddAppointmentRepository appointmentDAO;
-
-    private StudentRepository studentDAO;
-
-
-
-    @FXML
-    private ObservableList<Konsultimet> allAppointments = FXCollections.observableArrayList();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         try {
             renderStudent(getStudent());
         } catch (Exception e) {
-            ErrorPopupComponent.show(e);
+            e.printStackTrace();
         }
         profesoret.setItems(mainItems);
 
@@ -126,22 +118,22 @@ public class AddApointmentController implements Initializable {
                     setDisable(true);
                 }
                 if(profesoret.getSelectionModel().getSelectedItem().equals("Dhurate Hyseni")){
-                    if(date.getDayOfWeek() == DayOfWeek.FRIDAY || date.getDayOfWeek() == DayOfWeek.MONDAY || date.getDayOfWeek() == DayOfWeek.WEDNESDAY){
+                    if(date.getDayOfWeek() == DayOfWeek.FRIDAY || date.getDayOfWeek() == DayOfWeek.MONDAY || date.getDayOfWeek() == DayOfWeek.WEDNESDAY || date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY){
                         setDisable(true);
                     }
                 }
                 if(profesoret.getSelectionModel().getSelectedItem().equals("Blerim Rexha")){
-                    if(date.getDayOfWeek() == DayOfWeek.FRIDAY || date.getDayOfWeek() == DayOfWeek.MONDAY || date.getDayOfWeek() == DayOfWeek.THURSDAY || date.getDayOfWeek() == DayOfWeek.WEDNESDAY){
+                    if(date.getDayOfWeek() == DayOfWeek.FRIDAY || date.getDayOfWeek() == DayOfWeek.MONDAY || date.getDayOfWeek() == DayOfWeek.THURSDAY || date.getDayOfWeek() == DayOfWeek.WEDNESDAY || date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY){
                         setDisable(true);
                     }
                 }
                 if(profesoret.getSelectionModel().getSelectedItem().equals("Valon Raca")){
-                    if(date.getDayOfWeek() == DayOfWeek.FRIDAY || date.getDayOfWeek() == DayOfWeek.MONDAY){
+                    if(date.getDayOfWeek() == DayOfWeek.FRIDAY || date.getDayOfWeek() == DayOfWeek.MONDAY || date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY){
                         setDisable(true);
                     }
                 }
                 if(profesoret.getSelectionModel().getSelectedItem().equals("Kadri Sylejmani")){
-                    if(date.getDayOfWeek() == DayOfWeek.FRIDAY || date.getDayOfWeek() == DayOfWeek.MONDAY || date.getDayOfWeek() == DayOfWeek.WEDNESDAY){
+                    if(date.getDayOfWeek() == DayOfWeek.FRIDAY || date.getDayOfWeek() == DayOfWeek.MONDAY || date.getDayOfWeek() == DayOfWeek.WEDNESDAY || date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY){
                         setDisable(true);
                     }
                 }
@@ -197,14 +189,14 @@ public class AddApointmentController implements Initializable {
         gatherInformation();
         if(name.isBlank() || email == null || professor == null || lenda == null || date == null || startTime == null || endTime == null){
             Alert missingInformation = new Alert(Alert.AlertType.ERROR);
-            missingInformation.setTitle("Missing Information");
-            missingInformation.setContentText("Please fill out all fields");
+            missingInformation.setTitle("Njoftim");
+            missingInformation.setContentText("Ju lutem, plotesoni te gjitha fushat.");
             missingInformation.showAndWait();
             return false;
         }else if(startTime.isAfter(endTime) || startTime.equals(endTime)){
             Alert startEndConflict = new Alert(Alert.AlertType.ERROR);
-            startEndConflict.setTitle("Appointment time conflict.");
-            startEndConflict.setContentText("Appointment starting time must be before ending time.");
+            startEndConflict.setTitle("Konflikt");
+            startEndConflict.setContentText("Koha e fillimit te konsultimit duhet te jete para kohes se mbarimit.");
             startEndConflict.showAndWait();
             return false;
         } else if(!overlappingTimes()) {
@@ -224,14 +216,14 @@ public class AddApointmentController implements Initializable {
             for (Konsultimet konsultimi : appointments) {
                 if (startDateTime.isAfter(konsultimi.getFillimi().minusMinutes(1)) && startDateTime.isBefore(konsultimi.getFundi())) {
                     Alert overlapAlert = new Alert(Alert.AlertType.ERROR);
-                    overlapAlert.setTitle("Overlapping appointments");
-                    overlapAlert.setContentText("Your appointment overlaps with another appointment");
+                    overlapAlert.setTitle("Konflikt i konsultimeve");
+                    overlapAlert.setContentText("Ky konsultim eshte ne konflikt me konsultimin tek studenti " + konsultimi.getStudent() + ", ne lenden " + konsultimi.getLenda());
                     overlapAlert.showAndWait();
                     return false;
                 } else if (endDateTime.isAfter(konsultimi.getFillimi().minusMinutes(1)) && endDateTime.isBefore(konsultimi.getFundi())) {
                     Alert overlapAlert = new Alert(Alert.AlertType.ERROR);
-                    overlapAlert.setTitle("Overlapping appointments");
-                    overlapAlert.setContentText("Your appointment overlaps with another appointment");
+                    overlapAlert.setTitle("Konflikt i konsultimeve");
+                    overlapAlert.setContentText("Ky konsultim eshte ne konflikt me konsultimin tek studenti " + konsultimi.getStudent() + ", ne lenden " + konsultimi.getLenda());
                     overlapAlert.showAndWait();
                     return false;
                 }
@@ -248,14 +240,14 @@ public class AddApointmentController implements Initializable {
             if (validateInformation()) {
                 AddAppointmentRepository.create(professor, name, email, lenda, startDateTime, endDateTime, LocalDateTime.now());
                 Alert addAppointmentInformation = new Alert(Alert.AlertType.INFORMATION);
-                addAppointmentInformation.setTitle("Information");
-                addAppointmentInformation.setContentText("Appointment added successfully!");
+                addAppointmentInformation.setTitle("Njoftim");
+                addAppointmentInformation.setContentText("Konsultimi u shtua me sukses!");
                 addAppointmentInformation.showAndWait();
             }
         }catch(Exception ex){
             Alert addAppointmentError = new Alert(Alert.AlertType.ERROR);
-            addAppointmentError.setTitle("Error");
-            addAppointmentError.setContentText("Failed to add an appointment!");
+            addAppointmentError.setTitle("Gabim");
+            addAppointmentError.setContentText("Deshtoi te shtoj konsultimin!");
             addAppointmentError.showAndWait();
             ex.printStackTrace();
         }
@@ -287,64 +279,13 @@ public class AddApointmentController implements Initializable {
         emailField.setText(student.getEmail());
     }
 
-//    private void checkForAppointment(ActionEvent e){
-//        try{
-//            appointmentDAO = new AddAppointmentRepository();
-//            studentDAO = new StudentRepository();
-//            allAppointments = appointmentDAO.getAllKonsultimet();
-//
-//            boolean appointmentFlag  = false;
-//            String apptDate ="";
-//            String apptTime = "";
-//
-//            LocalTime currentTime = LocalTime.now();
-//            for(Konsultimet konsultimi : allAppointments){
-//                LocalTime appointmentStartTime = konsultimi.getFillimi().toLocalTime();
-//                Long timeDifference = ChronoUnit.MINUTES.between(currentTime, appointmentStartTime);
-//
-//                if (konsultimi.getFillimi().toLocalDate().equals(LocalDate.now())) {
-//                    if(timeDifference > -1 && timeDifference <= 15) {
-//                        appointmentFlag = true;
-//                        System.out.println(appointmentFlag);
-//                        apptDate = konsultimi.getStartDateFormatted();
-//                        apptTime = konsultimi.getStartTimeFormatted();
-//                        break;
-//                    }
-//                }
-//            }
-//            if(appointmentFlag){
-//                StringBuilder appointmentAlertContext = new StringBuilder();
-//                appointmentAlertContext.append("You have an upcoming appointment within 15 minutes.").append("\n");
-//                appointmentAlertContext.append("Date: ").append(apptDate).append("\n");
-//                appointmentAlertContext.append("Time: ").append(apptTime);
-//
-//                String title = "Appointment Within 15 Minutes";
-//                String body = String.valueOf(appointmentAlertContext);
-//                String to = studentEmail;
-////                MailController mailController = new MailController(to,title,body);
-////                mailController.sendMail();
-//                GenericAlert upcomingAppointments = new GenericAlert(title, appointmentAlertContext.toString(), Alert.AlertType.INFORMATION);
-//                upcomingAppointments.showAlert(e, "consultation.fxml");
-//            }else{
-//                String title = "No Upcoming Appointments";
-//                String contextText = "You have no upcoming appointments within 15 minutes";
-//                String to = studentEmail;
-////                MailController mailController = new MailController(to,title,contextText);
-////                mailController.sendMail();
-//                GenericAlert noUpcomingAppointments = new GenericAlert(title, contextText, Alert.AlertType.INFORMATION);
-//                noUpcomingAppointments.showAlert(e, "consultation.fxml");
-//            }
-//        } catch (Exception ex) {
-//            ex.printStackTrace();
-//        }
-//    }
 
     @FXML
     public void onLogoutButtonClick(ActionEvent e){
         try{
             Alert logOutConfirmation = new Alert(Alert.AlertType.CONFIRMATION);
-            logOutConfirmation.setTitle("Log Out");
-            logOutConfirmation.setContentText("Are you sure you want to logout ?");
+            logOutConfirmation.setTitle("Dil");
+            logOutConfirmation.setContentText("A jeni te sigurte qe doni te dilni nga sistemi?");
             Optional<ButtonType> result = logOutConfirmation.showAndWait();
             if(result.isPresent() && result.get() == ButtonType.OK){
             Parent parent = FXMLLoader.load(getClass().getResource("../views/login.fxml"));

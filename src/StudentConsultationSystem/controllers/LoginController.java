@@ -43,13 +43,11 @@ public class LoginController implements Initializable {
     @FXML
     private Label lblEmpty;
     @FXML
-        private Label statusLabel;
+    private Label statusLabel;
 
     private AddAppointmentRepository appointmentDAO;
 
     private StudentRepository studentDAO;
-
-
 
     @FXML
     private ObservableList<Konsultimet> allAppointments = FXCollections.observableArrayList();
@@ -64,7 +62,6 @@ public class LoginController implements Initializable {
         String password = passwordField.getText();
 
         if (userName.isEmpty() || password.isEmpty()) {
-            //empty information
             lblSuccessful.setVisible(false);
             lblFail.setVisible(false);
             lblEmpty.setVisible(true);
@@ -142,7 +139,7 @@ public class LoginController implements Initializable {
 
 
                     }catch(Exception ex){
-                        ErrorPopupComponent.show(ex);
+                        ex.printStackTrace();
                     }
                 }
             }

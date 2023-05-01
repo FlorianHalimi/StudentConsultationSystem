@@ -10,9 +10,9 @@ import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
 public class MailController {
-    private Properties mailServerProperties;
-    private Session getMailSession;
-    private MimeMessage generateMailMessage;
+    private Properties properties;
+    private Session session;
+    private MimeMessage message;
     final private String SENDER_MAIL = "tt202fdfd@gmail.com";
     final private String PASSWORD = "pssbeatczyvxrhij";
     final private String SMTP = "smtp.gmail.com";
@@ -28,22 +28,22 @@ public class MailController {
 
     public boolean sendMail() {
         try {
-            mailServerProperties = System.getProperties();
-            mailServerProperties.put("mail.smtp.port", "587");
-            mailServerProperties.put("mail.smtp.auth", "true");
-            mailServerProperties.put("mail.smtp.starttls.enable", "true");
+            properties = System.getProperties();
+            properties.put("mail.smtp.port", "587");
+            properties.put("mail.smtp.auth", "true");
+            properties.put("mail.smtp.starttls.enable", "true");
 
-            getMailSession = Session.getDefaultInstance(mailServerProperties, null);
-            generateMailMessage = new MimeMessage(getMailSession);
-            generateMailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-            generateMailMessage.setSubject(" Konsultime | " + subject);
-//            emailBody += "<br><br>`${crrUser}` <br> <a href='https://motyim.github.io/voidChat/'>visit us</a>";
-//            generateMailMessage.setContent(emailBody, "text/html");
+            session = Session.getDefaultInstance(properties, null);
+            message = new MimeMessage(session);
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+            message.setSubject(" Konsultime | " + subject);
+            emailBody += "<br><br>Cdo te mire! <br>";
+            message.setContent(emailBody, "text/html");
 
 
-            Transport transport = getMailSession.getTransport("smtp");
+            Transport transport = session.getTransport("smtp");
             transport.connect(SMTP, SENDER_MAIL, PASSWORD);
-            transport.sendMessage(generateMailMessage, generateMailMessage.getAllRecipients());
+            transport.sendMessage(message, message.getAllRecipients());
             transport.close();
 
         } catch (AddressException ex) {

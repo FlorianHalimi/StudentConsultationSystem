@@ -48,6 +48,7 @@
     -fx-font-weight: bold;
 }
 */
+/*
 .button {
   -fx-border-width: 0;
   -fx-border-radius: 4;
@@ -59,9 +60,10 @@
   -fx-border-width: 1;
   -fx-text-fill: #F7F7F7;
 }
-
+*/
 
 /*navbar */
+/*
 .navbar {
   -fx-border-color: #920709;
   -fx-background-color: #920709;
@@ -112,4 +114,45 @@
   -fx-border-radius: 5;
   -fx-border-width: 1;
   -fx-border-color: #222222;
+}
+*/
+
+.window .title-bar {
+    -fx-background-color: #920709; /* set the background color to red */
+}
+.app-buttons{
+    -fx-background-color: #920709;
+    -fx-text-fill: #fff;
+    -fx-background-radius:15px;
+}
+.app-buttons:hover{
+    -fx-background-color: #fff;
+    -fx-text-fill: #920709;
+    -fx-border-color: #920709;
+    -fx-border-radius: 45 45 45 45;
+}
+
+.menu-button{
+    -fx-background-color: #920709;
+    -fx-text-fill: #fff;
+}
+.menu-button:hover{
+    -fx-background-color: #fff;
+     -fx-text-fill: #920709;
+}
+
+.alert{
+      -fx-background-color: #fff;
+}
+.alert .button-bar .button {
+    -fx-background-color: #920709;
+    -fx-text-fill: #fff;
+    -fx-border-radius: 45 45 45 45;
+}
+
+.alert .button-bar .button:hover {
+    -fx-background-color: #fff;
+    -fx-text-fill: #920709;
+    -fx-border-color: #920709;
+    -fx-border-radius: 45 45 45 45;
 }

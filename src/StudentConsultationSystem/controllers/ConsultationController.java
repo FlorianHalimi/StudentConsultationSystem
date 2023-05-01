@@ -111,16 +111,16 @@ public class ConsultationController extends ChildController{
                 int selectedIndex = konsultimetTableView.getSelectionModel().getSelectedIndex();
                 int konsultimiID =selectedItem.getKonsultimi_id();
                 Alert deleteConfirmation = new Alert(Alert.AlertType.CONFIRMATION);
-                deleteConfirmation.setTitle("Delete Confirmation");
-                deleteConfirmation.setContentText("Are you sure you want to delete Appointment ?");
+                deleteConfirmation.setTitle("Konfirmim");
+                deleteConfirmation.setContentText("A jeni te sigurte qe doni te fshini kete konsultim?");
                 Optional<ButtonType> result = deleteConfirmation.showAndWait();
 
                 if(result.isPresent() && result.get() == ButtonType.OK){
                     allAppointments.remove(selectedItem);
                     addAppointmentRepository.DeleteAppointment(konsultimiID);
                     Alert appointmentCancellation = new Alert(Alert.AlertType.INFORMATION);
-                    appointmentCancellation.setTitle("Appointment Cancelled");
-                    String appointmentCancellationContext = "Appointment was cancelled.";
+                    appointmentCancellation.setTitle("Anulim");
+                    String appointmentCancellationContext = "Konsultimi u anulua.";
                     appointmentCancellation.setContentText(appointmentCancellationContext);
                     konsultimetTableView.getItems().remove(selectedIndex);
                     allAppointments.remove(selectedItem);
@@ -129,8 +129,8 @@ public class ConsultationController extends ChildController{
                 }
             }catch(Exception ex){
                 Alert selectAppointment = new Alert(Alert.AlertType.ERROR);
-                selectAppointment.setTitle("Select Appointment to Delete");
-                selectAppointment.setContentText("Please select an appointment to delete from the table view");
+                selectAppointment.setTitle("Zgjedhni nje konsultim");
+                selectAppointment.setContentText("Ju lutem, zgjidhni nje konsultim qe doni te fshini nga tabela.");
                 selectAppointment.showAndWait();
                 ex.printStackTrace();
             }

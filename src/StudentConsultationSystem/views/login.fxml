@@ -15,7 +15,7 @@
 
 <VBox alignment="TOP_CENTER" fillWidth="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="635.0" minWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="StudentConsultationSystem.controllers.LoginController">
     <children>
-        <AnchorPane fx:id="container">
+        <AnchorPane fx:id="container" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="635.0" minWidth="900.0" VBox.vgrow="ALWAYS">
             <children>
                 <Label alignment="CENTER" layoutX="170.0" layoutY="184.0" prefHeight="66.0" prefWidth="122.0" style="&#10;" text="Login" textAlignment="CENTER" textFill="#616161" wrapText="false">
                     <font>
@@ -30,7 +30,7 @@
                     <font>
                         <Font size="14.0" />
                     </font></PasswordField>
-                <Button fx:id="loginButton" layoutX="292.0" layoutY="395.0" mnemonicParsing="false" onAction="#onLoginButtonClick" prefHeight="31.0" prefWidth="129.0" style="-fx-background-color: #920709; -fx-background-radius: 15px;" text="Log in" textFill="WHITE">
+                <Button fx:id="loginButton" layoutX="292.0" layoutY="395.0" mnemonicParsing="false" onAction="#onLoginButtonClick" prefHeight="31.0" prefWidth="129.0" styleClass="app-buttons" stylesheets="@../resources/styles/style.css" text="Log in" textFill="WHITE">
                     <cursor>
                         <Cursor fx:constant="HAND" />
                     </cursor>

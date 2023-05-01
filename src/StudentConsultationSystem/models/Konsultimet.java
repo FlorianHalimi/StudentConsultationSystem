@@ -38,9 +38,16 @@ public class Konsultimet {
         this.data = data;
         this.email = email;
     }
+    public Konsultimet(){
+
+    }
 
     public int getKonsultimi_id() {
         return Konsultimi_id;
+    }
+
+    public void setKonsultimi_id(int konsultimi_id) {
+        Konsultimi_id = konsultimi_id;
     }
 
     public String getProfessor() {

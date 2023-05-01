@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.DialogPane;
 import javafx.stage.Stage;
 
 public class App extends Application {
@@ -19,7 +20,9 @@ public class App extends Application {
         Scene scene = new Scene(parent);
 
         stage.setScene(scene);
+        stage.setTitle("Sistem per menaxhimin e konsultimeve me studente");
         stage.show();
+
 
         stage.sizeToScene();
         stage.setMinHeight(scene.getHeight());

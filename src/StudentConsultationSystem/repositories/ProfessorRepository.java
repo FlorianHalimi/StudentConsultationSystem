@@ -1,15 +1,22 @@
 package StudentConsultationSystem.repositories;
 
+import StudentConsultationSystem.models.Konsultimet;
 import StudentConsultationSystem.models.Professor;
 import StudentConsultationSystem.models.Student;
 import StudentConsultationSystem.utils.DbHelper;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.scene.chart.PieChart;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ProfessorRepository {
+
     private static Professor parseRes(ResultSet res) throws Exception {
         int id = res.getInt("id");
         String username = res.getString("username");
@@ -70,4 +77,6 @@ public class ProfessorRepository {
         if (!res.next()) return null;
         return parseRes(res);
     }
+
+
 }

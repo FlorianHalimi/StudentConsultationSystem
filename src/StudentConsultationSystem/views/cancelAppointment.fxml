@@ -42,7 +42,7 @@
       </HBox>
       <HBox alignment="CENTER_RIGHT">
          <children>
-            <Button fx:id="LoginButton" alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#onSendButtonClick" prefHeight="31.0" prefWidth="129.0" style="-fx-background-color: #920709; -fx-background-radius: 15px;" text="Send" textFill="WHITE">
+            <Button fx:id="LoginButton" alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#onSendButtonClick" prefHeight="31.0" prefWidth="129.0" styleClass="app-buttons" stylesheets="@../resources/styles/style.css" text="Send" textFill="WHITE">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>

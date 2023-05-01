@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="contentPane" alignment="CENTER" fillWidth="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="635.0" minWidth="900.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="StudentConsultationSystem.controllers.AddApointmentController">
+<VBox fx:id="contentPane" alignment="CENTER" fillWidth="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="635.0" minWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="StudentConsultationSystem.controllers.AddApointmentController">
    <children>
       <HBox prefHeight="50.0" prefWidth="900.0" style="-fx-background-color: #920709;">
          <children>
@@ -34,7 +34,7 @@
                </HBox.margin>
             </Button>
             <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onShikoKonsultimetButtonClick" style="-fx-background-color: #920709; -fx-background-radius: 45 45 45 45;" text="Shiko konsultimet" textAlignment="CENTER" textFill="WHITE">
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onShikoKonsultimetButtonClick" styleClass="app-buttons" stylesheets="@../resources/styles/style.css" text="Shiko konsultimet" textAlignment="CENTER" textFill="WHITE">
                <HBox.margin>
                   <Insets right="10.0" top="10.0" />
                </HBox.margin>
@@ -92,7 +92,7 @@
                            <TextField fx:id="nameField" disable="true" style="-fx-background-radius: 45 45 45 45; -fx-background-color: #FFFFFD;" GridPane.rowIndex="2" />
                            <TextField fx:id="emailField" disable="true" style="-fx-background-radius: 45 45 45 45; -fx-background-color: #FFFFFD;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                            <DatePicker fx:id="datePicker" style="-fx-background-image: #FFFFFD;" GridPane.rowIndex="6" />
-                           <Button mnemonicParsing="false" onAction="#onSubmitButton" prefWidth="100.0" style="-fx-background-color: #920709;" text="Cakto" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="10" GridPane.valignment="BOTTOM" />
+                           <Button mnemonicParsing="false" onAction="#onSubmitButton" prefWidth="100.0" styleClass="app-buttons" stylesheets="@../resources/styles/style.css" text="Cakto" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="10" GridPane.valignment="BOTTOM" />
                            <Label text="Ju lutem, plotesoni te gjitha fushat" visible="false" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
                            <Label text="Konsultimi eshte caktuar me sukses." visible="false" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
                            <Label text="Provoni perseri!" visible="false" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
