@@ -118,17 +118,17 @@ public class AddApointmentController implements Initializable {
                     setDisable(true);
                 }
                 if(profesoret.getSelectionModel().getSelectedItem().equals("Dhurate Hyseni")){
-                    if(date.getDayOfWeek() == DayOfWeek.FRIDAY || date.getDayOfWeek() == DayOfWeek.MONDAY || date.getDayOfWeek() == DayOfWeek.WEDNESDAY || date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY){
+                    if(date.getDayOfWeek() == DayOfWeek.THURSDAY || date.getDayOfWeek() == DayOfWeek.MONDAY || date.getDayOfWeek() == DayOfWeek.WEDNESDAY || date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY){
                         setDisable(true);
                     }
                 }
                 if(profesoret.getSelectionModel().getSelectedItem().equals("Blerim Rexha")){
-                    if(date.getDayOfWeek() == DayOfWeek.FRIDAY || date.getDayOfWeek() == DayOfWeek.MONDAY || date.getDayOfWeek() == DayOfWeek.THURSDAY || date.getDayOfWeek() == DayOfWeek.WEDNESDAY || date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY){
+                    if(date.getDayOfWeek() == DayOfWeek.FRIDAY || date.getDayOfWeek() == DayOfWeek.MONDAY || date.getDayOfWeek() == DayOfWeek.WEDNESDAY || date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY){
                         setDisable(true);
                     }
                 }
                 if(profesoret.getSelectionModel().getSelectedItem().equals("Valon Raca")){
-                    if(date.getDayOfWeek() == DayOfWeek.FRIDAY || date.getDayOfWeek() == DayOfWeek.MONDAY || date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY){
+                    if(date.getDayOfWeek() == DayOfWeek.FRIDAY || date.getDayOfWeek() == DayOfWeek.TUESDAY || date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY){
                         setDisable(true);
                     }
                 }
@@ -166,7 +166,7 @@ public class AddApointmentController implements Initializable {
             }
         });
 
-        datePicker.setValue(LocalDate.now());
+//        datePicker.setValue(LocalDate.now());
         date = datePicker.getValue();
 
         TimeConversion.populateTimes(startTimeComboBox, start, end);
@@ -191,12 +191,20 @@ public class AddApointmentController implements Initializable {
             Alert missingInformation = new Alert(Alert.AlertType.ERROR);
             missingInformation.setTitle("Njoftim");
             missingInformation.setContentText("Ju lutem, plotesoni te gjitha fushat.");
+            DialogPane dialogPane = missingInformation.getDialogPane();
+            dialogPane.getStylesheets().add(
+                    getClass().getResource("../resources/styles/style.css").toExternalForm());
+            dialogPane.getStyleClass().add("alert");
             missingInformation.showAndWait();
             return false;
         }else if(startTime.isAfter(endTime) || startTime.equals(endTime)){
             Alert startEndConflict = new Alert(Alert.AlertType.ERROR);
             startEndConflict.setTitle("Konflikt");
             startEndConflict.setContentText("Koha e fillimit te konsultimit duhet te jete para kohes se mbarimit.");
+            DialogPane dialogPane = startEndConflict.getDialogPane();
+            dialogPane.getStylesheets().add(
+                    getClass().getResource("../resources/styles/style.css").toExternalForm());
+            dialogPane.getStyleClass().add("alert");
             startEndConflict.showAndWait();
             return false;
         } else if(!overlappingTimes()) {
@@ -218,12 +226,20 @@ public class AddApointmentController implements Initializable {
                     Alert overlapAlert = new Alert(Alert.AlertType.ERROR);
                     overlapAlert.setTitle("Konflikt i konsultimeve");
                     overlapAlert.setContentText("Ky konsultim eshte ne konflikt me konsultimin tek studenti " + konsultimi.getStudent() + ", ne lenden " + konsultimi.getLenda());
+                    DialogPane dialogPane = overlapAlert.getDialogPane();
+                    dialogPane.getStylesheets().add(
+                            getClass().getResource("../resources/styles/style.css").toExternalForm());
+                    dialogPane.getStyleClass().add("alert");
                     overlapAlert.showAndWait();
                     return false;
                 } else if (endDateTime.isAfter(konsultimi.getFillimi().minusMinutes(1)) && endDateTime.isBefore(konsultimi.getFundi())) {
                     Alert overlapAlert = new Alert(Alert.AlertType.ERROR);
                     overlapAlert.setTitle("Konflikt i konsultimeve");
                     overlapAlert.setContentText("Ky konsultim eshte ne konflikt me konsultimin tek studenti " + konsultimi.getStudent() + ", ne lenden " + konsultimi.getLenda());
+                    DialogPane dialogPane = overlapAlert.getDialogPane();
+                    dialogPane.getStylesheets().add(
+                            getClass().getResource("../resources/styles/style.css").toExternalForm());
+                    dialogPane.getStyleClass().add("alert");
                     overlapAlert.showAndWait();
                     return false;
                 }
@@ -242,12 +258,20 @@ public class AddApointmentController implements Initializable {
                 Alert addAppointmentInformation = new Alert(Alert.AlertType.INFORMATION);
                 addAppointmentInformation.setTitle("Njoftim");
                 addAppointmentInformation.setContentText("Konsultimi u shtua me sukses!");
+                DialogPane dialogPane = addAppointmentInformation.getDialogPane();
+                dialogPane.getStylesheets().add(
+                        getClass().getResource("../resources/styles/style.css").toExternalForm());
+                dialogPane.getStyleClass().add("alert");
                 addAppointmentInformation.showAndWait();
             }
         }catch(Exception ex){
             Alert addAppointmentError = new Alert(Alert.AlertType.ERROR);
             addAppointmentError.setTitle("Gabim");
             addAppointmentError.setContentText("Deshtoi te shtoj konsultimin!");
+            DialogPane dialogPane = addAppointmentError.getDialogPane();
+            dialogPane.getStylesheets().add(
+                    getClass().getResource("../resources/styles/style.css").toExternalForm());
+            dialogPane.getStyleClass().add("alert");
             addAppointmentError.showAndWait();
             ex.printStackTrace();
         }
@@ -286,6 +310,10 @@ public class AddApointmentController implements Initializable {
             Alert logOutConfirmation = new Alert(Alert.AlertType.CONFIRMATION);
             logOutConfirmation.setTitle("Dil");
             logOutConfirmation.setContentText("A jeni te sigurte qe doni te dilni nga sistemi?");
+            DialogPane dialogPane = logOutConfirmation.getDialogPane();
+            dialogPane.getStylesheets().add(
+                    getClass().getResource("../resources/styles/style.css").toExternalForm());
+            dialogPane.getStyleClass().add("alert");
             Optional<ButtonType> result = logOutConfirmation.showAndWait();
             if(result.isPresent() && result.get() == ButtonType.OK){
             Parent parent = FXMLLoader.load(getClass().getResource("../views/login.fxml"));

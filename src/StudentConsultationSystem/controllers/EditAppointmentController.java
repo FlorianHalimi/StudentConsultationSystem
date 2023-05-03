@@ -50,7 +50,7 @@ public class EditAppointmentController extends ChildController{
     private String text;
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
-    private static String subject = "Cancel consultation";
+    private static String subject = "Ndryshime ne konsultim";
 
     @FXML
     static
@@ -91,12 +91,20 @@ public class EditAppointmentController extends ChildController{
                     Alert overlapAlert = new Alert(Alert.AlertType.ERROR);
                     overlapAlert.setTitle("Konflikt i konsultimeve");
                     overlapAlert.setContentText("Ky konsultim eshte ne konflikt me konsultimin tek studenti " + konsultimi.getStudent() + ", ne lenden " + konsultimi.getLenda());
+                    DialogPane dialogPane = overlapAlert.getDialogPane();
+                    dialogPane.getStylesheets().add(
+                            getClass().getResource("../resources/styles/style.css").toExternalForm());
+                    dialogPane.getStyleClass().add("alert");
                     overlapAlert.showAndWait();
                     return false;
                 } else if (endDateTime.isAfter(konsultimi.getFillimi().minusMinutes(1)) && endDateTime.isBefore(konsultimi.getFundi())) {
                     Alert overlapAlert = new Alert(Alert.AlertType.ERROR);
                     overlapAlert.setTitle("Konflikt i konsultimeve");
                     overlapAlert.setContentText("Ky konsultim eshte ne konflikt me konsultimin tek studenti " + konsultimi.getStudent() + ", ne lenden " + konsultimi.getLenda());
+                    DialogPane dialogPane = overlapAlert.getDialogPane();
+                    dialogPane.getStylesheets().add(
+                            getClass().getResource("../resources/styles/style.css").toExternalForm());
+                    dialogPane.getStyleClass().add("alert");
                     overlapAlert.showAndWait();
                     return false;
                 }
@@ -113,12 +121,20 @@ public class EditAppointmentController extends ChildController{
             Alert missingInformation = new Alert(Alert.AlertType.ERROR);
             missingInformation.setTitle("Mungese te informatave");
             missingInformation.setContentText("Ju lutem, plotesoni te gjitha fushat");
+            DialogPane dialogPane = missingInformation.getDialogPane();
+            dialogPane.getStylesheets().add(
+                    getClass().getResource("../resources/styles/style.css").toExternalForm());
+            dialogPane.getStyleClass().add("alert");
             missingInformation.showAndWait();
             return false;
         }else if(startTime.isAfter(endTime) || startTime.equals(endTime)){
             Alert startEndConflict = new Alert(Alert.AlertType.ERROR);
             startEndConflict.setTitle("Konflikt ne kohen e konsultimeve");
             startEndConflict.setContentText("Koha e fillimit te konsultimit duhet te jete para kohes se mbarimit.");
+            DialogPane dialogPane = startEndConflict.getDialogPane();
+            dialogPane.getStylesheets().add(
+                    getClass().getResource("../resources/styles/style.css").toExternalForm());
+            dialogPane.getStyleClass().add("alert");
             startEndConflict.showAndWait();
             return false;
         } else if(!overlappingTimes()) {
@@ -136,20 +152,25 @@ public class EditAppointmentController extends ChildController{
             if (validateInformation()) {
                 EditAppointmentRepository.UpdateAppointment(startDateTime, endDateTime, LocalDateTime.now(), konsultimet.getKonsultimi_id());
                 Alert addAppointmentInformation = new Alert(Alert.AlertType.INFORMATION);
-                dialogPane = addAppointmentInformation.getDialogPane();
-                dialogPane.getStylesheets().add(getClass().getResource("style.css").toString());
-                dialogPane.getStyleClass().add("dialog");
                 addAppointmentInformation.setTitle("Njoftim");
                 addAppointmentInformation.setContentText("Konsultimi u ndryshua me sukses!");
+                DialogPane dialogPane = addAppointmentInformation.getDialogPane();
+                dialogPane.getStylesheets().add(
+                        getClass().getResource("../resources/styles/style.css").toExternalForm());
+                dialogPane.getStyleClass().add("alert");
                 addAppointmentInformation.showAndWait();
 
-                String body = "Arsyeja e ndryshimit te konsultimit: " +textArea.getText() + "\n" + "Data: " + konsultimet.getData() + "\n" + "Koha: " + konsultimet.getFillimi();
+                String body = "Pershendetje, <br>Arsyeja e ndryshimit te konsultimit: " +textArea.getText() +  "<br><br><b>Data e re konsultimit: </b>" + startDateTime.toLocalDate() +  "<b> <br>Koha:</b> " + konsultimet.getFillimi().toLocalTime();
                 MailController mailController = new MailController(konsultimet.getEmail(), subject, body);
                 mailController.sendMail();
 
                 Alert sendEmailConfirmation = new Alert(Alert.AlertType.CONFIRMATION);
                 sendEmailConfirmation.setTitle("Konfirmim");
                 sendEmailConfirmation.setContentText("Ju derguat njoftimin pse keni anuluar konsultimin!");
+                dialogPane = sendEmailConfirmation.getDialogPane();
+                dialogPane.getStylesheets().add(
+                        getClass().getResource("../resources/styles/style.css").toExternalForm());
+                dialogPane.getStyleClass().add("alert");
                 Optional<ButtonType> result = sendEmailConfirmation.showAndWait();
                 if (result.isPresent() && result.get() == ButtonType.OK){
                     this.setView(CALENDAR_VIEW);
@@ -159,6 +180,10 @@ public class EditAppointmentController extends ChildController{
             Alert addAppointmentError = new Alert(Alert.AlertType.ERROR);
             addAppointmentError.setTitle("Gabim");
             addAppointmentError.setContentText("Deshtoi ne ndryshimin e konsultimit!");
+            DialogPane dialogPane = addAppointmentError.getDialogPane();
+            dialogPane.getStylesheets().add(
+                    getClass().getResource("../resources/styles/style.css").toExternalForm());
+            dialogPane.getStyleClass().add("alert");
             addAppointmentError.showAndWait();
             ex.printStackTrace();
         }
@@ -193,5 +218,6 @@ public class EditAppointmentController extends ChildController{
         this.konsultimet.setEmail(selectedItem.getEmail());
         this.konsultimet.setData(selectedItem.getData());
         this.konsultimet.setFillimi(selectedItem.getFillimi());
+        this.konsultimet.setFundi(selectedItem.getFundi());
     }
 }

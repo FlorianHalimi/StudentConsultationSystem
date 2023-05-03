@@ -10,6 +10,9 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
@@ -17,6 +20,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
@@ -26,6 +30,7 @@ public class MainController implements Initializable {
     public static final String CANCEL_APPOINTMENT_VIEW = "cancelAppointment";
     public static final String ADD_APPOINTMENT_VIEW = "addAppointment";
     public static final String STATISTICS_VIEW = "pieChart";
+    public static final String LOGIN_VIEW = "login";
 
     private static final String VIEW_PATH = "../views";
     @FXML
@@ -69,6 +74,10 @@ public class MainController implements Initializable {
                 pane = loader.load();
                 contentPane.setAlignment(Pos.TOP_LEFT);
                 break;
+            case LOGIN_VIEW:
+                pane = loader.load();
+                contentPane.setAlignment(Pos.TOP_LEFT);
+                break;
             default:
                 throw new Exception("ERR_VIEW_NOT_FOUND");
         }
@@ -104,14 +113,22 @@ public class MainController implements Initializable {
     @FXML
     public void onLogoutButtonClick(ActionEvent e){
         try{
-            ErrorPopupComponent.showLogOutInformation();
-            Parent parent = FXMLLoader.load(getClass().getResource(viewPath("login")));
-            Scene scene = new Scene(parent);
+            Alert logOutConfirmation = new Alert(Alert.AlertType.CONFIRMATION);
+            logOutConfirmation.setTitle("Konfirmim");
+            logOutConfirmation.setContentText("A jeni te sogurte qe doni te dilni?");
+            DialogPane dialogPane = logOutConfirmation.getDialogPane();
+            dialogPane.getStylesheets().add(
+                    getClass().getResource("../resources/styles/style.css").toExternalForm());
+            dialogPane.getStyleClass().add("alert");
+            Optional<ButtonType> result = logOutConfirmation.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK){
+                Parent parent = FXMLLoader.load(getClass().getResource(viewPath("login")));
+                Scene scene = new Scene(parent);
 
-            Stage primaryStage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-            primaryStage.setScene(scene);
-            primaryStage.show();
-
+                Stage primaryStage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+                primaryStage.setScene(scene);
+                primaryStage.show();
+            }
         }catch(Exception ex){
 
         }

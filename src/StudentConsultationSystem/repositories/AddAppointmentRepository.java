@@ -9,6 +9,7 @@ import javafx.scene.chart.PieChart;
 
 import java.sql.*;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class AddAppointmentRepository {
 
@@ -37,7 +38,7 @@ public class AddAppointmentRepository {
         stmt.setString(1,professor);
         stmt.setString(2,student);
         stmt.setString(3,lenda);
-        stmt.setTimestamp(4, Timestamp.valueOf(start));
+        stmt.setTimestamp(4,Timestamp.valueOf(start));
         stmt.setTimestamp(5,Timestamp.valueOf(end));
         stmt.setTimestamp(6,Timestamp.valueOf(date));
         stmt.setString(7,email);

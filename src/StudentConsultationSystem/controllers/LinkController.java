@@ -5,10 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -28,7 +25,7 @@ public class LinkController extends ChildController{
     public static final String CALENDAR_VIEW = "calendar";
     private static final String VIEW_PATH = "../views";
 
-    private static String subject = "Anulim i konsultimit";
+    private static String subject = "Linku per konsultim";
 
     Konsultimet konsultimet = new Konsultimet();
     @Override
@@ -38,13 +35,17 @@ public class LinkController extends ChildController{
 
     @FXML
     public void onDergoButtonClick(ActionEvent e)throws  Exception{
-        String body = "Linku: " +linkField.getText() + " per konsultimin ne lenden "+ konsultimet.getLenda() + " qe eshte parapare te mbahet ne orarin " + konsultimet.getFillimi();
+        String body = "Pershdendetje, <br>Te bashkangjitur e keni linkun: <b>" +linkField.getText() + "</b> per konsultimin ne lenden <b>"+ konsultimet.getLenda() + "</b> qe eshte parapare te mbahet me daten <b>" + konsultimet.getFillimi().toLocalDate() + "</b> ne ora <b>" + konsultimet.getFillimi().toLocalTime() + "</b>";
         MailController mailController = new MailController(konsultimet.getEmail(), subject, body);
         mailController.sendMail();
 
         Alert sendEmailConfirmation = new Alert(Alert.AlertType.CONFIRMATION);
         sendEmailConfirmation.setTitle("Konfirmim");
         sendEmailConfirmation.setContentText("Ju derguat linkun per mbajtjen e konsultimit!");
+        DialogPane dialogPane = sendEmailConfirmation.getDialogPane();
+        dialogPane.getStylesheets().add(
+                getClass().getResource("../resources/styles/style.css").toExternalForm());
+        dialogPane.getStyleClass().add("alert");
         Optional<ButtonType> result = sendEmailConfirmation.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK){
             this.setView(CALENDAR_VIEW);

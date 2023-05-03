@@ -91,7 +91,7 @@
                            </Label>
                            <TextField fx:id="nameField" disable="true" style="-fx-background-radius: 45 45 45 45; -fx-background-color: #FFFFFD;" GridPane.rowIndex="2" />
                            <TextField fx:id="emailField" disable="true" style="-fx-background-radius: 45 45 45 45; -fx-background-color: #FFFFFD;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                           <DatePicker fx:id="datePicker" style="-fx-background-image: #FFFFFD;" GridPane.rowIndex="6" />
+                           <DatePicker fx:id="datePicker" style="-fx-background-image: #FFFFFD;" GridPane.columnSpan="2" GridPane.rowIndex="6" />
                            <Button mnemonicParsing="false" onAction="#onSubmitButton" prefWidth="100.0" styleClass="app-buttons" stylesheets="@../resources/styles/style.css" text="Cakto" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="10" GridPane.valignment="BOTTOM" />
                            <Label text="Ju lutem, plotesoni te gjitha fushat" visible="false" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
                            <Label text="Konsultimi eshte caktuar me sukses." visible="false" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="7" />

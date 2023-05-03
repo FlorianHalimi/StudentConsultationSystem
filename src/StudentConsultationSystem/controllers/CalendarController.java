@@ -214,6 +214,10 @@ private Konsultimet parseRes(ResultSet res) throws SQLException {
         Alert deleteConfirmation = new Alert(Alert.AlertType.CONFIRMATION);
         deleteConfirmation.setTitle("Konfirmimi i anulimit");
         deleteConfirmation.setContentText("A jeni te sigurt qe doni te anuloni kete konsultim?");
+        DialogPane dialogPane = deleteConfirmation.getDialogPane();
+        dialogPane.getStylesheets().add(
+                getClass().getResource("../resources/styles/style.css").toExternalForm());
+        dialogPane.getStyleClass().add("alert");
         Optional<ButtonType> result = deleteConfirmation.showAndWait();
 
         if (result.isPresent() && result.get() == ButtonType.OK) {
@@ -225,6 +229,10 @@ private Konsultimet parseRes(ResultSet res) throws SQLException {
             appointmentCancellation.setContentText(appointmentCancellationContext);
             otherDaysTableView.getItems().remove(selectedIndex);
             allAppointments.remove(selectedItem);
+            dialogPane = appointmentCancellation.getDialogPane();
+            dialogPane.getStylesheets().add(
+                    getClass().getResource("../resources/styles/style.css").toExternalForm());
+            dialogPane.getStyleClass().add("alert");
             appointmentCancellation.showAndWait();
 
             try {
@@ -240,6 +248,10 @@ private Konsultimet parseRes(ResultSet res) throws SQLException {
                 Alert notify = new Alert(Alert.AlertType.INFORMATION);
                 notify.setTitle("Informacion");
                 notify.setContentText("Ju duhet te tregoni arsyen e anulimit te konsulimit.");
+                dialogPane = notify.getDialogPane();
+                dialogPane.getStylesheets().add(
+                        getClass().getResource("../resources/styles/style.css").toExternalForm());
+                dialogPane.getStyleClass().add("alert");
                 notify.showAndWait();
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -273,6 +285,10 @@ private Konsultimet parseRes(ResultSet res) throws SQLException {
                 Alert notify = new Alert(Alert.AlertType.INFORMATION);
                 notify.setTitle("Informacion");
                 notify.setContentText("Ju duhet te tregoni arsyen e anulimit te konsulimit.");
+                dialogPane = notify.getDialogPane();
+                dialogPane.getStylesheets().add(
+                        getClass().getResource("../resources/styles/style.css").toExternalForm());
+                dialogPane.getStyleClass().add("alert");
                 notify.showAndWait();
             } catch (Exception ex) {
                 ex.printStackTrace();

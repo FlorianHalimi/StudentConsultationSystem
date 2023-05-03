@@ -2,7 +2,9 @@ package StudentConsultationSystem.models;
 
 import StudentConsultationSystem.repositories.TimeConversion;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 
 public class Konsultimet {

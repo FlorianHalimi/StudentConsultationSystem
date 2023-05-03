@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
@@ -35,13 +36,17 @@ public class CancelAppointmentController extends ChildController{
 
     @FXML
     public void onSendButtonClick()throws Exception{
-        String body = "Konsultimi ne lenden " + konsultimet.getLenda() + " qe eshte parapare te mbahet ne orarin " + konsultimet.getFillimi() +  " eshte anuluar. " + System.lineSeparator() + "Arsyeja e anulimit: " +  textArea.getText();
+        String body = "Pershendetje, <br>Konsultimi ne lenden <b> " + konsultimet.getLenda() + "</b> qe eshte parapare te mbahet me daten <b>" + konsultimet.getFillimi().toLocalDate() +  "</b> ne ora <b>" + konsultimet.getFillimi().toLocalTime() + "</b> eshte anuluar.<br> <br>Arsyeja e anulimit: " +  textArea.getText();
         MailController mailController = new MailController(konsultimet.getEmail(), subject, body);
         mailController.sendMail();
 
         Alert sendEmailConfirmation = new Alert(Alert.AlertType.CONFIRMATION);
         sendEmailConfirmation.setTitle("Konfirmim");
         sendEmailConfirmation.setContentText("Ju derguat njoftimin pse keni anuluar konsultimin!");
+        DialogPane dialogPane = sendEmailConfirmation.getDialogPane();
+        dialogPane.getStylesheets().add(
+                getClass().getResource("../resources/styles/style.css").toExternalForm());
+        dialogPane.getStyleClass().add("alert");
         Optional<ButtonType> result = sendEmailConfirmation.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK){
             this.setView(CALENDAR_VIEW);

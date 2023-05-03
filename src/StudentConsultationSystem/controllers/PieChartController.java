@@ -22,51 +22,86 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class PieChartController extends ChildController{
 
     @FXML
-    private PieChart pieChart;
-    @FXML
-    private BorderPane contentPane;
-    @FXML
     private BorderPane borderPane;
-    static ObservableList<String> data = FXCollections.observableArrayList();
-    String professor = SessionManager.professor.getName();
+    ObservableList<PieChart.Data> data = FXCollections.observableArrayList();
+    ObservableList<LocalDate> timeList = FXCollections.observableArrayList();
+    static String professor = SessionManager.professor.getName();
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
             borderPane.setCenter(buildPieChart());
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
     private PieChart buildPieChart() throws Exception {
-
         data = StatisticsRepository.getLenda(professor);
-        pieChart = new PieChart();
-
+        PieChart pieChart = new PieChart(data);
         pieChart.setTitle("Statistikat e konsultimeve sipas lendeve!"); //Setting the title of the Pie chart
         pieChart.setClockwise(true); //setting the direction to arrange the data
-//        pieChart.setLabelLineLength(50); //Setting the length of the label line
+        pieChart.setLabelLineLength(50); //Setting the length of the label line
         pieChart.setLabelsVisible(true); //Setting the labels of the pie chart visible
         pieChart.setLegendVisible(true);
-//        pieChart.setStartAngle(180);S
+        pieChart.setStartAngle(180);
 
-        HashMap<String, Integer> countMap = new HashMap<>();
-        for (String category : data) {
-            countMap.put(category, countMap.getOrDefault(category, 0) + 1);
-        }
-
-        for (String category : countMap.keySet()) {
-            int count = countMap.get(category);
-            pieChart.getData().add(new PieChart.Data(category + " (" + count + ")", count));
-        }
-
+        data.forEach(item ->{
+            item.nameProperty().bind(Bindings.concat(item.getName(), " ", item.pieValueProperty().intValue(), " "));
+        });
         return pieChart;
     }
 
+    private PieChart datePieChart() throws Exception {
+
+        timeList = StatisticsRepository.getTimeList(professor);
+        PieChart datepieChart = new PieChart();
+        datepieChart.setTitle("Statistikat e konsultimeve sipas dates!"); //Setting the title of the Pie chart
+        datepieChart.setClockwise(true); //setting the direction to arrange the data
+        datepieChart.setLabelLineLength(50); //Setting the length of the label line
+        datepieChart.setLabelsVisible(true); //Setting the labels of the pie chart visible
+        datepieChart.setLegendVisible(true);
+        datepieChart.setStartAngle(180);
+        datepieChart.getData().clear();
+
+        datepieChart.getData().remove(timeList);
+
+
+        HashMap<LocalDate, Integer> countMap = new HashMap<>();
+
+        countMap.clear();
+        for (LocalDate category : timeList) {
+            countMap.put(LocalDate.parse(String.valueOf(category)), countMap.getOrDefault(category, 0) + 1);
+        }
+
+        for (LocalDate category : countMap.keySet()) {
+            int count = countMap.get(category);
+            datepieChart.getData().add(new PieChart.Data(category + " (" + count + ")", count));
+        }
+
+        countMap.clear();
+
+        return datepieChart;
+    }
+
+    @FXML
+    public void onStatisticsBasedOnDate(){
+        try {
+            borderPane.setCenter(datePieChart());
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
