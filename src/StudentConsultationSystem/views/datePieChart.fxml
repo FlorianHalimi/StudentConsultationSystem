@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+
+
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.geometry.Insets?>
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+       <BorderPane fx:id="borderPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="StudentConsultationSystem.controllers.DatePieChartController">
+           <center>
+               <PieChart BorderPane.alignment="TOP_CENTER">
+                   <BorderPane.margin>
+                       <Insets />
+                   </BorderPane.margin>
+                   <padding>
+                       <Insets bottom="50.0" top="50.0" />
+                   </padding>
+               </PieChart>
+           </center>
+           <bottom>
+               <Region prefHeight="60.0" BorderPane.alignment="CENTER" />
+           </bottom>
+           <top>
+               <HBox prefHeight="60.0" style="-fx-background-color: #fff;" BorderPane.alignment="CENTER">
+                   <children>
+                       <Button mnemonicParsing="false" style="-fx-background-color: #ffffff;">
+                           <HBox.margin>
+                               <Insets left="5.0" top="5.0" />
+                           </HBox.margin>
+                           <graphic>
+                               <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                   <image>
+                                       <Image url="@../resources/images/92backIcon.png" />
+                                   </image>
+                               </ImageView>
+                           </graphic>
+                       </Button>
+                   </children>
+               </HBox>
+           </top>
+       </BorderPane>
+
+   </children>
+</VBox>

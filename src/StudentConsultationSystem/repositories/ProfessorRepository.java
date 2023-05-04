@@ -79,4 +79,15 @@ public class ProfessorRepository {
     }
 
 
+    public static int UpdatePassword(String password,String username)throws Exception{
+        int res = -1;
+        Connection conn = DbHelper.getConnection();
+        PreparedStatement stmt = conn.prepareStatement("UPDATE professor set password = ? where username = ?");
+        stmt.setString(1,password);
+        stmt.setString(2,username);
+
+        res = stmt.executeUpdate();
+        return res;
+    }
+
 }

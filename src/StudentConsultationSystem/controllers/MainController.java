@@ -115,7 +115,7 @@ public class MainController implements Initializable {
         try{
             Alert logOutConfirmation = new Alert(Alert.AlertType.CONFIRMATION);
             logOutConfirmation.setTitle("Konfirmim");
-            logOutConfirmation.setContentText("A jeni te sogurte qe doni te dilni?");
+            logOutConfirmation.setContentText("A jeni te sigurte qe doni te dilni?");
             DialogPane dialogPane = logOutConfirmation.getDialogPane();
             dialogPane.getStylesheets().add(
                     getClass().getResource("../resources/styles/style.css").toExternalForm());

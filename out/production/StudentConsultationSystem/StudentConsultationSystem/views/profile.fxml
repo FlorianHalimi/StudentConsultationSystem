@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox minHeight="400.0" minWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="StudentConsultationSystem.controllers.ProfileController">
+<VBox fx:id="contentPane" minHeight="400.0" minWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="StudentConsultationSystem.controllers.ProfileController">
    <children>
       <HBox alignment="CENTER_LEFT">
          <children>
@@ -87,7 +87,7 @@
                         <Image url="@../resources/images/padlock.png" />
                      </image>
                   </ImageView>
-                  <PasswordField text="********" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <PasswordField disable="true" text="********" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <Hyperlink onAction="#hyperLinkAction" text="Change Password" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.valignment="TOP" />
                    </children>
                </GridPane>

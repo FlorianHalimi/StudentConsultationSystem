@@ -16,6 +16,7 @@ public abstract class ChildController implements Initializable {
 
     public ProfileController changePasswordParentController;
 
+
     public void setParentController(MainController parentController){
         this.parentController = parentController;
     }
@@ -45,5 +46,6 @@ public abstract class ChildController implements Initializable {
     public void setChangePasswordParentController(ProfileController changePasswordController){
         this.changePasswordParentController = changePasswordController;
     }
+
 
 }

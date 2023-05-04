@@ -3,13 +3,14 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
 
-<BorderPane fx:id="borderPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="StudentConsultationSystem.controllers.PieChartController">
+<BorderPane fx:id="borderPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="StudentConsultationSystem.controllers.PieChartController">
    <center>
-      <PieChart  BorderPane.alignment="TOP_CENTER">
+      <PieChart BorderPane.alignment="TOP_CENTER">
          <BorderPane.margin>
             <Insets />
          </BorderPane.margin>
@@ -18,13 +19,10 @@
          </padding>
       </PieChart>
    </center>
-   <top>
-      <Region prefHeight="60.0" BorderPane.alignment="CENTER" />
-   </top>
    <bottom>
       <HBox alignment="CENTER_RIGHT" prefHeight="60.0" BorderPane.alignment="CENTER">
          <children>
-            <Button contentDisplay="RIGHT" mnemonicParsing="false" onAction="#onStatisticsBasedOnDate" styleClass="app-buttons" stylesheets="@../resources/styles/style.css" text="Shiko statistikat sipas dates">
+            <Button fx:id="button" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#onStatisticsBasedOnDate" styleClass="app-buttons" stylesheets="@../resources/styles/style.css" text="Shiko statistikat sipas dates">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
@@ -32,4 +30,22 @@
          </children>
       </HBox>
    </bottom>
+   <top>
+      <HBox prefHeight="60.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="backButton" mnemonicParsing="false" onAction="#onBackIconClick" style="-fx-background-color: #fff;">
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/images/92backIcon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <HBox.margin>
+                  <Insets left="5.0" top="5.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+   </top>
 </BorderPane>

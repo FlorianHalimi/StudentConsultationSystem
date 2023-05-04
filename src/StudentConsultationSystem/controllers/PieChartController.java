@@ -9,13 +9,19 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.chart.PieChart;
+import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
 import java.net.URL;
@@ -32,17 +38,23 @@ import java.util.ResourceBundle;
 
 public class PieChartController extends ChildController{
 
+
+    @FXML
+    private Button button;
+
+    @FXML
+    private Button backButton;
     @FXML
     private BorderPane borderPane;
     ObservableList<PieChart.Data> data = FXCollections.observableArrayList();
     ObservableList<LocalDate> timeList = FXCollections.observableArrayList();
-    static String professor = SessionManager.professor.getName();
 
+    static String professor = SessionManager.professor.getName();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
             borderPane.setCenter(buildPieChart());
-
+            backButton.setVisible(false);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -62,7 +74,6 @@ public class PieChartController extends ChildController{
         });
         return pieChart;
     }
-
     private PieChart datePieChart() throws Exception {
 
         timeList = StatisticsRepository.getTimeList(professor);
@@ -76,8 +87,6 @@ public class PieChartController extends ChildController{
         datepieChart.getData().clear();
 
         datepieChart.getData().remove(timeList);
-
-
         HashMap<LocalDate, Integer> countMap = new HashMap<>();
 
         countMap.clear();
@@ -99,7 +108,18 @@ public class PieChartController extends ChildController{
     public void onStatisticsBasedOnDate(){
         try {
             borderPane.setCenter(datePieChart());
-
+            button.setVisible(false);
+            backButton.setVisible(true);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    @FXML
+    public void onBackIconClick(){
+        try {
+            borderPane.setCenter(buildPieChart());
+            backButton.setVisible(false);
+            button.setVisible(true);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

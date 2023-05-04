@@ -9,12 +9,16 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.net.URL;
@@ -27,6 +31,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ProfileController extends ChildController{
+
     @FXML
     private VBox contentPane;
     @FXML
@@ -44,6 +49,7 @@ public class ProfileController extends ChildController{
     @FXML
     private Label lblFail;
 
+    public static final String CHANGE_PASSWORD_VIEW = "changePassword";
     private static final String VIEW_PATH = "../views";
     private String professorName = SessionManager.professor.getName();
     @Override
@@ -151,9 +157,15 @@ public class ProfileController extends ChildController{
     public void setView(String view)throws Exception{
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource(this.viewPath(view)));
-        Pane pane = loader.load();
-
-        contentPane.setAlignment(Pos.TOP_LEFT);
+        Pane pane = null;
+        switch(view){
+            case CHANGE_PASSWORD_VIEW:
+                pane = loader.load();
+                contentPane.setAlignment(Pos.TOP_LEFT);
+                break;
+            default:
+                throw new Exception("ERR_VIEW_NOT_FOUND");
+        }
 
         ChildController controller = loader.getController();
         controller.setChangePasswordParentController(this);
@@ -168,7 +180,10 @@ public class ProfileController extends ChildController{
     }
     @FXML
     public void hyperLinkAction(ActionEvent e)throws Exception{
-        String view = "changePassword";
-        setView(view);
+        try{
+            this.setView(CHANGE_PASSWORD_VIEW);
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
     }
 }

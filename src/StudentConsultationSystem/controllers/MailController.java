@@ -13,8 +13,8 @@ public class MailController {
     private Properties properties;
     private Session session;
     private MimeMessage message;
-    final private String SENDER_MAIL = "tt202fdfd@gmail.com";
-    final private String PASSWORD = "pssbeatczyvxrhij";
+    final private String SENDER_MAIL = "menaxhimikonsultimeve@gmail.com";
+    final private String PASSWORD = "ezpwxesnvybgnaan";
     final private String SMTP = "smtp.gmail.com";
     private String to;
     private String subject;
