@@ -124,7 +124,6 @@ private Konsultimet parseRes(ResultSet res) throws SQLException {
     public List<Konsultimet> getKonsultimet(boolean thisDay) throws Exception{
         ArrayList<Konsultimet> konsultimet = new ArrayList<>();
         LocalDate today =LocalDate.now();
-
         if(thisDay){
             String sql ="SELECT * FROM konsultimet WHERE Profesori = '" + professorName + "' and fillimi like '" + today + "%';";
             try{
@@ -162,7 +161,6 @@ private Konsultimet parseRes(ResultSet res) throws SQLException {
         List<Konsultimet> konsultimetOtherDays = getKonsultimet(false);
         otherDaysTableView.getItems().clear();
         otherDaysTableView.setItems(FXCollections.observableArrayList(konsultimetOtherDays));
-
     }
 
     public void setView(String view)throws Exception{

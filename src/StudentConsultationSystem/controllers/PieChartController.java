@@ -12,10 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.chart.PieChart;
-import javafx.scene.control.Button;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -46,6 +43,7 @@ public class PieChartController extends ChildController{
     private Button backButton;
     @FXML
     private BorderPane borderPane;
+
     ObservableList<PieChart.Data> data = FXCollections.observableArrayList();
     ObservableList<LocalDate> timeList = FXCollections.observableArrayList();
 
@@ -62,30 +60,38 @@ public class PieChartController extends ChildController{
     private PieChart buildPieChart() throws Exception {
         data = StatisticsRepository.getLenda(professor);
         PieChart pieChart = new PieChart(data);
-        pieChart.setTitle("Statistikat e konsultimeve sipas lendeve!"); //Setting the title of the Pie chart
-        pieChart.setClockwise(true); //setting the direction to arrange the data
-        pieChart.setLabelLineLength(50); //Setting the length of the label line
-        pieChart.setLabelsVisible(true); //Setting the labels of the pie chart visible
+        pieChart.setTitle("Statistikat e konsultimeve sipas lendeve!");
+        pieChart.setClockwise(true);
+        pieChart.setLabelLineLength(50);
+        pieChart.setLabelsVisible(true);
         pieChart.setLegendVisible(true);
-        pieChart.setStartAngle(180);
+        pieChart.setStartAngle(0);
 
         data.forEach(item ->{
             item.nameProperty().bind(Bindings.concat(item.getName(), " ", item.pieValueProperty().intValue(), " "));
         });
+        if(data.isEmpty()){
+            Alert noConsultationRegistered = new Alert(Alert.AlertType.INFORMATION);
+            noConsultationRegistered.setTitle("Njoftim");
+            noConsultationRegistered.setContentText("Nuk keni ndonje konsultim te regjistuar!");
+            noConsultationRegistered.getDialogPane().getStylesheets().add(
+                    getClass().getResource("../resources/styles/style.css").toExternalForm());
+            noConsultationRegistered.getDialogPane().setStyle("alert");
+            noConsultationRegistered.showAndWait();
+        }
         return pieChart;
     }
     private PieChart datePieChart() throws Exception {
 
         timeList = StatisticsRepository.getTimeList(professor);
         PieChart datepieChart = new PieChart();
-        datepieChart.setTitle("Statistikat e konsultimeve sipas dates!"); //Setting the title of the Pie chart
-        datepieChart.setClockwise(true); //setting the direction to arrange the data
-        datepieChart.setLabelLineLength(50); //Setting the length of the label line
-        datepieChart.setLabelsVisible(true); //Setting the labels of the pie chart visible
+        datepieChart.setTitle("Statistikat e konsultimeve sipas dates!");
+        datepieChart.setClockwise(true);
+        datepieChart.setLabelLineLength(50);
+        datepieChart.setLabelsVisible(true);
         datepieChart.setLegendVisible(true);
         datepieChart.setStartAngle(180);
         datepieChart.getData().clear();
-
         datepieChart.getData().remove(timeList);
         HashMap<LocalDate, Integer> countMap = new HashMap<>();
 
@@ -98,9 +104,7 @@ public class PieChartController extends ChildController{
             int count = countMap.get(category);
             datepieChart.getData().add(new PieChart.Data(category + " (" + count + ")", count));
         }
-
         countMap.clear();
-
         return datepieChart;
     }
 

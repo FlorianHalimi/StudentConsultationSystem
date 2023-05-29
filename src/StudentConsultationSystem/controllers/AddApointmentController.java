@@ -1,11 +1,9 @@
 package StudentConsultationSystem.controllers;
 
-import StudentConsultationSystem.components.ErrorPopupComponent;
 import StudentConsultationSystem.models.Konsultimet;
 import StudentConsultationSystem.models.Student;
 import StudentConsultationSystem.repositories.AddAppointmentRepository;
-import StudentConsultationSystem.repositories.StudentRepository;
-import StudentConsultationSystem.repositories.TimeConversion;
+import StudentConsultationSystem.repositories.TimeReformation;
 import StudentConsultationSystem.utils.DbHelper;
 import StudentConsultationSystem.utils.SessionManager;
 import javafx.collections.FXCollections;
@@ -20,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import javafx.util.StringConverter;
 
 import java.net.URL;
@@ -73,10 +72,10 @@ public class AddApointmentController implements Initializable {
     private String studentEmail = SessionManager.student.getEmail();
 
     ObservableList<String> mainItems = FXCollections.observableArrayList("Dhurate Hyseni", "Blerim Rexha", "Valon Raca", "Kadri Sylejmani");
-    ObservableList<String> prof1 = FXCollections.observableArrayList("Sisteme te shperndara");
+    ObservableList<String> prof1 = FXCollections.observableArrayList("Sisteme te shperndara", "Programimi ne internet");
     ObservableList<String> prof2 = FXCollections.observableArrayList("Siguria e te dhenave", "Rrjetet Kompjuterike", "Siguria e Internetit", "Inxhinieria Softuerike");
 
-    ObservableList<String> prof3 = FXCollections.observableArrayList("Arkitektura e kompjuterve", "Programimi ne internet");
+    ObservableList<String> prof3 = FXCollections.observableArrayList("Arkitektura e kompjuterve");
     ObservableList<String> prof4 = FXCollections.observableArrayList("Gjuhe programuese", "Algoritmet dhe strukturat e te dhenave","Praktika Profesionale");
 
     @Override
@@ -145,7 +144,7 @@ public class AddApointmentController implements Initializable {
             String format = "MM-dd-yyyy";
             DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(format);
             {
-                datePicker.setPromptText("Pick a date from the picker ");
+                datePicker.setPromptText("Perzgjedhni daten!");
             }
             @Override
             public String toString(LocalDate localDate) {
@@ -169,8 +168,8 @@ public class AddApointmentController implements Initializable {
 //        datePicker.setValue(LocalDate.now());
         date = datePicker.getValue();
 
-        TimeConversion.populateTimes(startTimeComboBox, start, end);
-        TimeConversion.populateTimes(endTimeComboBox, start, end);
+        TimeReformation.populateTimes(startTimeComboBox, start, end);
+        TimeReformation.populateTimes(endTimeComboBox, start, end);
         startTimeComboBox.getSelectionModel().selectFirst();
         endTimeComboBox.getSelectionModel().select(1);
     }
@@ -201,10 +200,9 @@ public class AddApointmentController implements Initializable {
             Alert startEndConflict = new Alert(Alert.AlertType.ERROR);
             startEndConflict.setTitle("Konflikt");
             startEndConflict.setContentText("Koha e fillimit te konsultimit duhet te jete para kohes se mbarimit.");
-            DialogPane dialogPane = startEndConflict.getDialogPane();
-            dialogPane.getStylesheets().add(
+            startEndConflict.getDialogPane().getStylesheets().add(
                     getClass().getResource("../resources/styles/style.css").toExternalForm());
-            dialogPane.getStyleClass().add("alert");
+            startEndConflict.getDialogPane().setStyle("alert");
             startEndConflict.showAndWait();
             return false;
         } else if(!overlappingTimes()) {
@@ -225,21 +223,20 @@ public class AddApointmentController implements Initializable {
                 if (startDateTime.isAfter(konsultimi.getFillimi().minusMinutes(1)) && startDateTime.isBefore(konsultimi.getFundi())) {
                     Alert overlapAlert = new Alert(Alert.AlertType.ERROR);
                     overlapAlert.setTitle("Konflikt i konsultimeve");
-                    overlapAlert.setContentText("Ky konsultim eshte ne konflikt me konsultimin tek studenti " + konsultimi.getStudent() + ", ne lenden " + konsultimi.getLenda());
-                    DialogPane dialogPane = overlapAlert.getDialogPane();
-                    dialogPane.getStylesheets().add(
-                            getClass().getResource("../resources/styles/style.css").toExternalForm());
-                    dialogPane.getStyleClass().add("alert");
+                    overlapAlert.setContentText("Ky konsultim nuk mund te caktohet sepse eshte ne konflikt me nje konsultim tjeter tek profesori " + konsultimi.getProfessor() + ", ne lenden " + konsultimi.getLenda());
+                    overlapAlert.getDialogPane().getStylesheets().add(getClass().getResource("../resources/styles/style.css").toExternalForm());
+                    overlapAlert.getDialogPane().setStyle("alert");
+                    overlapAlert.setHeight(300);
                     overlapAlert.showAndWait();
                     return false;
                 } else if (endDateTime.isAfter(konsultimi.getFillimi().minusMinutes(1)) && endDateTime.isBefore(konsultimi.getFundi())) {
                     Alert overlapAlert = new Alert(Alert.AlertType.ERROR);
                     overlapAlert.setTitle("Konflikt i konsultimeve");
-                    overlapAlert.setContentText("Ky konsultim eshte ne konflikt me konsultimin tek studenti " + konsultimi.getStudent() + ", ne lenden " + konsultimi.getLenda());
-                    DialogPane dialogPane = overlapAlert.getDialogPane();
-                    dialogPane.getStylesheets().add(
+                    overlapAlert.setContentText("Ky konsultim nuk mund te caktohet sepse eshte ne konflikt me nje konsultim tjeter tek profesori " + konsultimi.getProfessor() + ", ne lenden " + konsultimi.getLenda());
+                    overlapAlert.getDialogPane().getStylesheets().add(
                             getClass().getResource("../resources/styles/style.css").toExternalForm());
-                    dialogPane.getStyleClass().add("alert");
+                    overlapAlert.getDialogPane().setStyle("alert");
+                    overlapAlert.setHeight(300);
                     overlapAlert.showAndWait();
                     return false;
                 }
@@ -258,20 +255,18 @@ public class AddApointmentController implements Initializable {
                 Alert addAppointmentInformation = new Alert(Alert.AlertType.INFORMATION);
                 addAppointmentInformation.setTitle("Njoftim");
                 addAppointmentInformation.setContentText("Konsultimi u shtua me sukses!");
-                DialogPane dialogPane = addAppointmentInformation.getDialogPane();
-                dialogPane.getStylesheets().add(
+                addAppointmentInformation.getDialogPane().getStylesheets().add(
                         getClass().getResource("../resources/styles/style.css").toExternalForm());
-                dialogPane.getStyleClass().add("alert");
+                addAppointmentInformation.getDialogPane().setStyle("alert");
                 addAppointmentInformation.showAndWait();
             }
         }catch(Exception ex){
             Alert addAppointmentError = new Alert(Alert.AlertType.ERROR);
             addAppointmentError.setTitle("Gabim");
             addAppointmentError.setContentText("Deshtoi te shtoj konsultimin!");
-            DialogPane dialogPane = addAppointmentError.getDialogPane();
-            dialogPane.getStylesheets().add(
+            addAppointmentError.getDialogPane().getStylesheets().add(
                     getClass().getResource("../resources/styles/style.css").toExternalForm());
-            dialogPane.getStyleClass().add("alert");
+            addAppointmentError.getDialogPane().setStyle("alert");
             addAppointmentError.showAndWait();
             ex.printStackTrace();
         }

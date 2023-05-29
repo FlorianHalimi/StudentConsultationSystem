@@ -19,7 +19,7 @@ public class StatisticsRepository {
     public static ObservableList<PieChart.Data> getLenda(String professor) throws Exception {
         data.clear();
         Connection conn = DbHelper.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("SELECT Lenda, COUNT(*) FROM konsultimet WHERE Profesori = ? GROUP BY Lenda");
+        PreparedStatement stmt = conn.prepareStatement("SELECT Lenda, COUNT(*) FROM konsultimet WHERE Profesori = ?  and DATE(fillimi) > CURDATE() GROUP BY Lenda");
         stmt.setString(1, professor);
 
         ResultSet res = stmt.executeQuery();

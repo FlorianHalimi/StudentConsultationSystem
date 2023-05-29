@@ -53,7 +53,7 @@
             <children>
                 <ImageView fitHeight="144.0" fitWidth="226.0" pickOnBounds="true" preserveRatio="true" translateX="53.0" translateY="75.0">
                     <image>
-                        <Image url="@../resources/images/profImg.png" />
+                        <Image url="@../resources/images/proficon.png" />
                     </image>
                 </ImageView>
             <HBox alignment="CENTER" prefWidth="250.0" translateY="80.0">

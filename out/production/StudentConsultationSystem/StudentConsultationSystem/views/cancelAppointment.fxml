@@ -18,7 +18,7 @@
          <children>
             <VBox HBox.hgrow="ALWAYS">
                <children>
-                  <Label text="Enter the reason why you decided to cancel this appointment" wrapText="true">
+                  <Label text="Tregoni arsyen e anulimit të konsultimit" wrapText="true">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -42,7 +42,7 @@
       </HBox>
       <HBox alignment="CENTER_RIGHT">
          <children>
-            <Button fx:id="LoginButton" alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#onSendButtonClick" prefHeight="31.0" prefWidth="129.0" styleClass="app-buttons" stylesheets="@../resources/styles/style.css" text="Send" textFill="WHITE">
+            <Button fx:id="LoginButton" alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#onSendButtonClick" prefHeight="31.0" prefWidth="129.0" styleClass="app-buttons" stylesheets="@../resources/styles/style.css" text="Dergo" textFill="WHITE">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>

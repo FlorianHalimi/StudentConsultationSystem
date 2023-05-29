@@ -98,12 +98,12 @@
                            <Label text="Provoni perseri!" visible="false" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
                         <ComboBox fx:id="lendet" prefWidth="150.0" style="-fx-background-radius: 45 45 45 45;" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                         <ComboBox fx:id="profesoret" prefWidth="203.0" style="-fx-background-radius: 45 45 45 45;" GridPane.rowIndex="4" />
-                        <Label fx:id="lblEmpty" text="All field are required. Please fill them out!" textFill="RED" visible="false" GridPane.columnSpan="2" />
-                        <Label text="Start Time" GridPane.rowIndex="7">
+                        <Label fx:id="lblEmpty" text="Te gjitha fushat kerkohen. Ju lutem plotesoni ato!" textFill="RED" visible="false" GridPane.columnSpan="2" />
+                        <Label text="Koha e fillimit" GridPane.rowIndex="7">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font></Label>
-                        <Label text="End Time" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                        <Label text="Koha e perfundimit" GridPane.columnIndex="1" GridPane.rowIndex="7">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font></Label>

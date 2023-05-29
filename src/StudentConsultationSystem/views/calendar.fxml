@@ -26,22 +26,22 @@
                </HBox.margin>
              </Label>
             <Region prefWidth="145.0" HBox.hgrow="ALWAYS" />
-            <Button fx:id="cancelButton" disable="true" mnemonicParsing="false" onAction="#onCancelButtonClick" prefWidth="75.0" styleClass="app-buttons" stylesheets="@../resources/styles/style.css" text="Cancel" textFill="WHITE">
+            <Button fx:id="cancelButton" disable="true" mnemonicParsing="false" onAction="#onCancelButtonClick" prefWidth="75.0" styleClass="app-buttons" stylesheets="@../resources/styles/style.css" text="Anulo" textFill="WHITE">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="editButton" disable="true" mnemonicParsing="false" onAction="#onEditButtonClick" prefWidth="75.0" styleClass="app-buttons" stylesheets="@../resources/styles/style.css" text="Edit" textFill="WHITE">
+            <Button fx:id="editButton" disable="true" mnemonicParsing="false" onAction="#onEditButtonClick" prefWidth="75.0" styleClass="app-buttons" stylesheets="@../resources/styles/style.css" text="Ndrysho" textFill="WHITE">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="refreshButton" mnemonicParsing="false" onAction="#onRefreshButtonClick" prefWidth="75.0" styleClass="app-buttons" stylesheets="@../resources/styles/style.css" text="Refresh" textFill="WHITE">
+            <Button fx:id="refreshButton" mnemonicParsing="false" onAction="#onRefreshButtonClick" prefWidth="75.0" styleClass="app-buttons" stylesheets="@../resources/styles/style.css" text="Rifresko" textFill="WHITE">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="sendLinkButton" disable="true" mnemonicParsing="false" onAction="#onSendLinkButtonClick" prefWidth="75.0" styleClass="app-buttons" stylesheets="@../resources/styles/style.css" text="Send a link" textFill="WHITE">
+            <Button fx:id="sendLinkButton" disable="true" mnemonicParsing="false" onAction="#onSendLinkButtonClick" prefHeight="26.0" prefWidth="90.0" styleClass="app-buttons" stylesheets="@../resources/styles/style.css" text="Dergo linkun" textFill="WHITE">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>

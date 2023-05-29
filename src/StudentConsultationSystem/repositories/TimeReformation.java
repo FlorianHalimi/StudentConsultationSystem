@@ -7,7 +7,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 
-public class TimeConversion {
+public class TimeReformation {
     public static ComboBox<LocalTime> populateTimes(ComboBox<LocalTime> localTimeComboBox, LocalTime startTime, LocalTime endTime) {
         while(startTime.isBefore(endTime.plusSeconds(1))) {
             localTimeComboBox.getItems().add(startTime);

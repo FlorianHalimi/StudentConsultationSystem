@@ -25,7 +25,6 @@ public class MailController {
         this.subject = subject;
         this.emailBody = emailBody;
     }
-
     public boolean sendMail() {
         try {
             properties = System.getProperties();

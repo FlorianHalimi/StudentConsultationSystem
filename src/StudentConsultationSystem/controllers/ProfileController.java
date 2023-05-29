@@ -52,6 +52,7 @@ public class ProfileController extends ChildController{
     public static final String CHANGE_PASSWORD_VIEW = "changePassword";
     private static final String VIEW_PATH = "../views";
     private String professorName = SessionManager.professor.getName();
+    private String professorUsername = SessionManager.professor.getUsername();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -74,10 +75,10 @@ public class ProfileController extends ChildController{
         return professor;
     }
     private Professor getProfessor() throws Exception{
-        String sql = "SELECT * from professor WHERE name = ?";
+        String sql = "SELECT * from professor WHERE username = ?";
         Connection conn = DbHelper.getConnection();
         PreparedStatement stmt = conn.prepareStatement(sql);
-        stmt.setString(1,professorName);
+        stmt.setString(1,professorUsername);
 
         ResultSet res = stmt.executeQuery();
 

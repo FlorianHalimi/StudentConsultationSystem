@@ -16,16 +16,16 @@
     <children>
         <AnchorPane fx:id="container" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="635.0" minWidth="900.0" VBox.vgrow="ALWAYS">
             <children>
-                <Label alignment="CENTER" layoutX="138.0" layoutY="184.0" prefHeight="66.0" prefWidth="282.0" style="&#10;" text="Sistemi per menaxhimin e konsultimeve" textAlignment="CENTER" textFill="#616161" wrapText="true">
+                <Label accessibleRoleDescription="ru" alignment="CENTER" layoutX="138.0" layoutY="184.0" prefHeight="66.0" prefWidth="282.0" style="&#10;" text="Sistemi per menaxhimin e konsultimeve" textAlignment="CENTER" textFill="#616161" wrapText="true">
                     <font>
                         <Font name="Arial Black" size="18.0" />
                     </font>
                 </Label>
-                <TextField fx:id="usernameField" layoutX="170.0" layoutY="262.0" prefHeight="40.0" prefWidth="250.0" promptText="Username" style="-fx-background-color: #FFFFFD; -fx-background-radius: 0 45 45 0;">
+                <TextField fx:id="usernameField" layoutX="170.0" layoutY="262.0" prefHeight="40.0" prefWidth="250.0" promptText="Perdoruesi" style="-fx-background-color: #FFFFFD; -fx-background-radius: 0 45 45 0;">
                     <font>
                         <Font size="14.0" />
                     </font></TextField>
-                <PasswordField fx:id="passwordField" layoutX="170.0" layoutY="316.0" prefHeight="40.0" prefWidth="250.0" promptText="Password" style="-fx-background-color: #FFFFFD; -fx-background-radius: 0 45 45 0;">
+                <PasswordField fx:id="passwordField" layoutX="170.0" layoutY="316.0" prefHeight="40.0" prefWidth="250.0" promptText="Fjalekalimi" style="-fx-background-color: #FFFFFD; -fx-background-radius: 0 45 45 0;">
                     <font>
                         <Font size="14.0" />
                     </font></PasswordField>
@@ -41,17 +41,17 @@
                <image>
                   <Image url="@../resources/images/LoginImg.png" />
                </image></ImageView>
-                <Label fx:id="lblSuccessful" layoutX="170.0" layoutY="370.0" text="Successfully! Directing..." textFill="#00e22d" visible="false">
+                <Label fx:id="lblSuccessful" layoutX="170.0" layoutY="370.0" text="Qasja e suksesshme!..." textFill="#00e22d" visible="false">
                     <font>
                         <Font name="System Italic" size="11.0" />
                     </font>
                 </Label>
-                <Label fx:id="lblFail" layoutX="170.0" layoutY="370.0" text="Wrong user name or password" textFill="#ff4b4b" visible="false">
+                <Label fx:id="lblFail" layoutX="170.0" layoutY="370.0" text="Përdoruesi ose fjalekalimi eshte i gabuar!" textFill="#ff4b4b" visible="false">
                     <font>
                         <Font name="System Italic" size="11.0" />
                     </font>
                 </Label>
-                <Label fx:id="lblEmpty" layoutX="170.0" layoutY="370.0" text="Please full fill information" textFill="#ff4833" visible="false">
+                <Label fx:id="lblEmpty" layoutX="170.0" layoutY="370.0" text="Ju lutem, plotesoni te gjitha fushat!" textFill="#ff4833" visible="false">
                     <font>
                         <Font name="System Italic" size="11.0" />
                     </font>

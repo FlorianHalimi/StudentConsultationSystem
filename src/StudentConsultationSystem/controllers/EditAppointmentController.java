@@ -1,9 +1,8 @@
 package StudentConsultationSystem.controllers;
 
 import StudentConsultationSystem.models.Konsultimet;
-import StudentConsultationSystem.repositories.AddAppointmentRepository;
 import StudentConsultationSystem.repositories.EditAppointmentRepository;
-import StudentConsultationSystem.repositories.TimeConversion;
+import StudentConsultationSystem.repositories.TimeReformation;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -66,8 +65,8 @@ public class EditAppointmentController extends ChildController{
         datePickerBox.setValue(LocalDate.now());
         date = datePickerBox.getValue();
 
-        TimeConversion.populateTimes(startTimeComboBox, start, end);
-        TimeConversion.populateTimes(endTimeComboBox, start, end);
+        TimeReformation.populateTimes(startTimeComboBox, start, end);
+        TimeReformation.populateTimes(endTimeComboBox, start, end);
         startTimeComboBox.getSelectionModel().selectFirst();
         endTimeComboBox.getSelectionModel().select(1);
 
@@ -90,21 +89,21 @@ public class EditAppointmentController extends ChildController{
                 if (startDateTime.isAfter(konsultimi.getFillimi().minusMinutes(1)) && startDateTime.isBefore(konsultimi.getFundi())) {
                     Alert overlapAlert = new Alert(Alert.AlertType.ERROR);
                     overlapAlert.setTitle("Konflikt i konsultimeve");
-                    overlapAlert.setContentText("Ky konsultim eshte ne konflikt me konsultimin tek studenti " + konsultimi.getStudent() + ", ne lenden " + konsultimi.getLenda());
-                    DialogPane dialogPane = overlapAlert.getDialogPane();
-                    dialogPane.getStylesheets().add(
+                    overlapAlert.setContentText("Ky konsultim nuk mund te caktohet sepse eshte ne konflikt me nje konsultim tjeter tek profesori " + konsultimi.getProfessor() + ", ne lenden " + konsultimi.getLenda());
+                    overlapAlert.getDialogPane().getStylesheets().add(
                             getClass().getResource("../resources/styles/style.css").toExternalForm());
-                    dialogPane.getStyleClass().add("alert");
+                    overlapAlert.getDialogPane().setStyle("alert");
+                    overlapAlert.setHeight(300);
                     overlapAlert.showAndWait();
                     return false;
                 } else if (endDateTime.isAfter(konsultimi.getFillimi().minusMinutes(1)) && endDateTime.isBefore(konsultimi.getFundi())) {
                     Alert overlapAlert = new Alert(Alert.AlertType.ERROR);
                     overlapAlert.setTitle("Konflikt i konsultimeve");
-                    overlapAlert.setContentText("Ky konsultim eshte ne konflikt me konsultimin tek studenti " + konsultimi.getStudent() + ", ne lenden " + konsultimi.getLenda());
-                    DialogPane dialogPane = overlapAlert.getDialogPane();
-                    dialogPane.getStylesheets().add(
+                    overlapAlert.setContentText("Ky konsultim nuk mund te caktohet sepse eshte ne konflikt me nje konsultim tjeter tek profesori " + konsultimi.getProfessor() + ", ne lenden " + konsultimi.getLenda());
+                    overlapAlert.getDialogPane().getStylesheets().add(
                             getClass().getResource("../resources/styles/style.css").toExternalForm());
-                    dialogPane.getStyleClass().add("alert");
+                    overlapAlert.getDialogPane().setStyle("alert");
+                    overlapAlert.setHeight(300);
                     overlapAlert.showAndWait();
                     return false;
                 }
@@ -154,23 +153,21 @@ public class EditAppointmentController extends ChildController{
                 Alert addAppointmentInformation = new Alert(Alert.AlertType.INFORMATION);
                 addAppointmentInformation.setTitle("Njoftim");
                 addAppointmentInformation.setContentText("Konsultimi u ndryshua me sukses!");
-                DialogPane dialogPane = addAppointmentInformation.getDialogPane();
-                dialogPane.getStylesheets().add(
+                addAppointmentInformation.getDialogPane().getStylesheets().add(
                         getClass().getResource("../resources/styles/style.css").toExternalForm());
-                dialogPane.getStyleClass().add("alert");
+                addAppointmentInformation.getDialogPane().setStyle("alert");
                 addAppointmentInformation.showAndWait();
 
-                String body = "Pershendetje, <br>Arsyeja e ndryshimit te konsultimit: " +textArea.getText() +  "<br><br><b>Data e re konsultimit: </b>" + startDateTime.toLocalDate() +  "<b> <br>Koha:</b> " + konsultimet.getFillimi().toLocalTime();
+                String body = "Pershendetje, <br>Arsyeja e ndryshimit te konsultimit: " +textArea.getText() +  "<br><br><b>Data e re konsultimit: </b>" + startDateTime.toLocalDate() +  "<b> <br>Koha:</b> " + startTimeComboBox.getSelectionModel().getSelectedItem();
                 MailController mailController = new MailController(konsultimet.getEmail(), subject, body);
                 mailController.sendMail();
 
                 Alert sendEmailConfirmation = new Alert(Alert.AlertType.CONFIRMATION);
                 sendEmailConfirmation.setTitle("Konfirmim");
                 sendEmailConfirmation.setContentText("Ju derguat njoftimin pse keni anuluar konsultimin!");
-                dialogPane = sendEmailConfirmation.getDialogPane();
-                dialogPane.getStylesheets().add(
+                sendEmailConfirmation.getDialogPane().getStylesheets().add(
                         getClass().getResource("../resources/styles/style.css").toExternalForm());
-                dialogPane.getStyleClass().add("alert");
+                sendEmailConfirmation.getDialogPane().setStyle("alert");
                 Optional<ButtonType> result = sendEmailConfirmation.showAndWait();
                 if (result.isPresent() && result.get() == ButtonType.OK){
                     this.setView(CALENDAR_VIEW);

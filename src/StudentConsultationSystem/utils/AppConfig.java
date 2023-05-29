@@ -3,9 +3,7 @@ package StudentConsultationSystem.utils;
 import java.util.Properties;
 
 public class AppConfig {
-
     private static AppConfig instance;
-
     private Properties props;
     private AppConfig(){
         try{

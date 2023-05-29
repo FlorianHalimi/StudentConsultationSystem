@@ -35,12 +35,12 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
-                        <Label text="Select new date for your appointment" GridPane.columnSpan="2" GridPane.valignment="BOTTOM" />
+                        <Label text="Zgjedhni nje date te re per konsultim" GridPane.columnSpan="2" GridPane.valignment="BOTTOM" />
                         <DatePicker fx:id="datePickerBox" prefHeight="26.0" prefWidth="401.0" GridPane.columnSpan="2" GridPane.rowIndex="1" />
-                        <Label text="Select new time for your appointment" GridPane.columnSpan="2" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
-                        <Label text="Start Time" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
-                        <Label text="Enter the reason for this rescheduling" GridPane.columnSpan="2" GridPane.rowIndex="5" GridPane.valignment="BOTTOM" />
-                        <TextArea fx:id="textArea" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="6" GridPane.rowSpan="2" />
+                        <Label text="Zgjedhni kohen per konsultim" GridPane.columnSpan="2" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
+                        <Label text="Koha e fillimit" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                        <Label text="Shkruani arysen per ndryshimin e konsultimit" GridPane.columnSpan="2" GridPane.rowIndex="5" GridPane.valignment="BOTTOM" />
+                        <TextArea fx:id="textArea" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnSpan="2" GridPane.rowIndex="6" GridPane.rowSpan="2" />
                         <Button mnemonicParsing="false" onAction="#onDergoButtonClick" prefHeight="31.0" prefWidth="129.0" styleClass="app-buttons" stylesheets="@../resources/styles/style.css" text="Dergo" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="8">
                             <cursor>
                                 <Cursor fx:constant="HAND" />
@@ -50,7 +50,7 @@
                             </font>
                         </Button>
                   <ComboBox fx:id="startTimeComboBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <Label text="End Time" GridPane.rowIndex="4" />
+                  <Label text="Koha e perfundimit" GridPane.rowIndex="4" />
                   <ComboBox fx:id="endTimeComboBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                     </children>
                 </GridPane>

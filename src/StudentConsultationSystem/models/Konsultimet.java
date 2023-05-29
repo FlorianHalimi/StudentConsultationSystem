@@ -1,10 +1,8 @@
 package StudentConsultationSystem.models;
 
-import StudentConsultationSystem.repositories.TimeConversion;
+import StudentConsultationSystem.repositories.TimeReformation;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 
 public class Konsultimet {
@@ -108,9 +106,9 @@ public class Konsultimet {
         this.email = email;
     }
     public String getStartDateFormatted() {
-        return TimeConversion.formatDate(fillimi);
+        return TimeReformation.formatDate(fillimi);
     }
     public String getStartTimeFormatted() {
-        return TimeConversion.formatTime(fillimi);
+        return TimeReformation.formatTime(fillimi);
     }
 }

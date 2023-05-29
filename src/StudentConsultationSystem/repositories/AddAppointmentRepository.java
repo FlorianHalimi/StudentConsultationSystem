@@ -17,9 +17,6 @@ public class AddAppointmentRepository {
     static
     ObservableList<Konsultimet> appointments = FXCollections.observableArrayList();
 
-    @FXML
-    static
-    ObservableList<PieChart.Data> pieChartData  = FXCollections.observableArrayList();
     private static Konsultimet parseRes(ResultSet res) throws SQLException {
         String profesori = res.getString("profesori");
         String studenti = res.getString("studenti");
