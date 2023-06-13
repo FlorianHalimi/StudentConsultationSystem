@@ -5,11 +5,10 @@ import StudentConsultationSystem.utils.DbHelper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.chart.PieChart;
+
 
 import java.sql.*;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 public class AddAppointmentRepository {
 
@@ -28,7 +27,8 @@ public class AddAppointmentRepository {
 
         return new Konsultimet(profesori,studenti,lenda,start,end,creatDate,email);
     }
-    public static void create(String professor, String student, String email, String lenda, LocalDateTime start, LocalDateTime end, LocalDateTime date) throws Exception{
+    public static void create(String professor, String student, String email, String lenda, LocalDateTime start,
+                              LocalDateTime end, LocalDateTime date) throws Exception{
         Connection conn = DbHelper.getConnection();
         String query = "INSERT INTO konsultimet(Profesori,Studenti,Lenda,fillimi,fundi,dita,email) VALUES (?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement stmt = conn.prepareStatement(query);
@@ -39,9 +39,7 @@ public class AddAppointmentRepository {
         stmt.setTimestamp(5,Timestamp.valueOf(end));
         stmt.setTimestamp(6,Timestamp.valueOf(date));
         stmt.setString(7,email);
-
         stmt.execute();
-
     }
 
     public static ObservableList<Konsultimet> getAllKonsultimet() throws Exception {

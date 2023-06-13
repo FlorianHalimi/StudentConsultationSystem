@@ -19,7 +19,8 @@ public class StatisticsRepository {
     public static ObservableList<PieChart.Data> getLenda(String professor) throws Exception {
         data.clear();
         Connection conn = DbHelper.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("SELECT Lenda, COUNT(*) FROM konsultimet WHERE Profesori = ?  and DATE(fillimi) > CURDATE() GROUP BY Lenda");
+        PreparedStatement stmt = conn.prepareStatement("SELECT Lenda, COUNT(*) FROM konsultimet WHERE Profesori = ?  " +
+                                                            "and DATE(fillimi) > CURDATE() GROUP BY Lenda");
         stmt.setString(1, professor);
 
         ResultSet res = stmt.executeQuery();
@@ -33,7 +34,8 @@ public class StatisticsRepository {
     public static ObservableList<LocalDate> getTimeList(String professor) throws Exception {
         timeList.clear();
         Connection conn = DbHelper.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("SELECT fillimi FROM konsultimet WHERE Profesori = ?  and DATE(fillimi) > CURDATE();");
+        PreparedStatement stmt = conn.prepareStatement("SELECT fillimi FROM konsultimet WHERE Profesori = ? " +
+                                                            "and DATE(fillimi) > CURDATE();");
         stmt.setString(1, professor);
 
         ResultSet res = stmt.executeQuery();

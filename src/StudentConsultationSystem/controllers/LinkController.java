@@ -33,19 +33,24 @@ public class LinkController extends ChildController{
 
     }
 
+    public void getCss(Alert alert){
+        alert.getDialogPane().getStylesheets().add(getClass().getResource("../resources/styles/style.css").toExternalForm());
+        alert.getDialogPane().setStyle("alert");
+        alert.setHeight(300);
+    }
+
     @FXML
     public void onDergoButtonClick(ActionEvent e)throws  Exception{
-        String body = "Pershdendetje, <br>Te bashkangjitur e keni linkun: <b>" +linkField.getText() + "</b> per konsultimin ne lenden <b>"+ konsultimet.getLenda() + "</b> qe eshte parapare te mbahet me daten <b>" + konsultimet.getFillimi().toLocalDate() + "</b> ne ora <b>" + konsultimet.getFillimi().toLocalTime() + "</b>";
+        String body = "Pershdendetje, <br>Te bashkangjitur e keni linkun: <b>" +linkField.getText() +
+                "</b> per konsultimin ne lenden <b>"+ konsultimet.getLenda() + "</b> qe eshte parapare te mbahet me daten <b>"
+                + konsultimet.getFillimi().toLocalDate() + "</b> ne ora <b>" + konsultimet.getFillimi().toLocalTime() + "</b>";
         MailController mailController = new MailController(konsultimet.getEmail(), subject, body);
         mailController.sendMail();
 
         Alert sendEmailConfirmation = new Alert(Alert.AlertType.CONFIRMATION);
         sendEmailConfirmation.setTitle("Konfirmim");
         sendEmailConfirmation.setContentText("Ju derguat linkun per mbajtjen e konsultimit!");
-        DialogPane dialogPane = sendEmailConfirmation.getDialogPane();
-        dialogPane.getStylesheets().add(
-                getClass().getResource("../resources/styles/style.css").toExternalForm());
-        dialogPane.getStyleClass().add("alert");
+        getCss(sendEmailConfirmation);
         Optional<ButtonType> result = sendEmailConfirmation.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK){
             this.setView(CALENDAR_VIEW);

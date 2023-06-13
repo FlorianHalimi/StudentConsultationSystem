@@ -70,7 +70,7 @@ public class LoginController implements Initializable {
                 try {
 
                     FXMLLoader loader = new FXMLLoader();
-                    loader.setLocation(getClass().getResource("../views/registerProfessor.fxml"));
+                    loader.setLocation(getClass().getResource("../views/registerStudent.fxml"));
                     Parent parent = loader.load();
 
                     Stage primaryStage = (Stage) ((Node) e.getSource()).getScene().getWindow();

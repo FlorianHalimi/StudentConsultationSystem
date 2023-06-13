@@ -25,6 +25,8 @@ import java.net.URL;
 import java.sql.*;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -78,11 +80,14 @@ public class AddApointmentController implements Initializable {
     ObservableList<String> prof3 = FXCollections.observableArrayList("Arkitektura e kompjuterve");
     ObservableList<String> prof4 = FXCollections.observableArrayList("Gjuhe programuese", "Algoritmet dhe strukturat e te dhenave","Praktika Profesionale");
 
+    private static final List<DayOfWeek> disabledDaysOfWeek = new ArrayList<>();
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         try {
             renderStudent(getStudent());
+            loadDisabledDaysFromDatabase();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -90,7 +95,6 @@ public class AddApointmentController implements Initializable {
 
         profesoret.setOnAction(e ->{
             String selectedItem = profesoret.getSelectionModel().getSelectedItem();
-
             switch(selectedItem){
                 case "Dhurate Hyseni":
                     lendet.setItems(prof1);
@@ -105,38 +109,24 @@ public class AddApointmentController implements Initializable {
                     lendet.setItems(prof4);
                     break;
             }
-
         });
 
         datePicker.setDayCellFactory(picker -> new DateCell(){
             public void updateItem(LocalDate date, boolean empty){
                 super.updateItem(date,empty);
                 LocalDate today = LocalDate.now();
-
                 if(date.isBefore(today)){
                     setDisable(true);
                 }
-                if(profesoret.getSelectionModel().getSelectedItem().equals("Dhurate Hyseni")){
-                    if(date.getDayOfWeek() == DayOfWeek.THURSDAY || date.getDayOfWeek() == DayOfWeek.MONDAY || date.getDayOfWeek() == DayOfWeek.WEDNESDAY || date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY){
+                if(date.isEqual(today)){
+                    setDisable(true);
+                }
+                if (date != null && !empty) {
+                    DayOfWeek dayOfWeek = date.getDayOfWeek();
+                    if (disabledDaysOfWeek.contains(dayOfWeek)) {
                         setDisable(true);
                     }
                 }
-                if(profesoret.getSelectionModel().getSelectedItem().equals("Blerim Rexha")){
-                    if(date.getDayOfWeek() == DayOfWeek.FRIDAY || date.getDayOfWeek() == DayOfWeek.MONDAY || date.getDayOfWeek() == DayOfWeek.WEDNESDAY || date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY){
-                        setDisable(true);
-                    }
-                }
-                if(profesoret.getSelectionModel().getSelectedItem().equals("Valon Raca")){
-                    if(date.getDayOfWeek() == DayOfWeek.FRIDAY || date.getDayOfWeek() == DayOfWeek.TUESDAY || date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY){
-                        setDisable(true);
-                    }
-                }
-                if(profesoret.getSelectionModel().getSelectedItem().equals("Kadri Sylejmani")){
-                    if(date.getDayOfWeek() == DayOfWeek.FRIDAY || date.getDayOfWeek() == DayOfWeek.MONDAY || date.getDayOfWeek() == DayOfWeek.WEDNESDAY || date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY){
-                        setDisable(true);
-                    }
-                }
-
             }
         });
 
@@ -165,7 +155,6 @@ public class AddApointmentController implements Initializable {
             }
         });
 
-//        datePicker.setValue(LocalDate.now());
         date = datePicker.getValue();
 
         TimeReformation.populateTimes(startTimeComboBox, start, end);
@@ -190,19 +179,21 @@ public class AddApointmentController implements Initializable {
             Alert missingInformation = new Alert(Alert.AlertType.ERROR);
             missingInformation.setTitle("Njoftim");
             missingInformation.setContentText("Ju lutem, plotesoni te gjitha fushat.");
-            DialogPane dialogPane = missingInformation.getDialogPane();
-            dialogPane.getStylesheets().add(
-                    getClass().getResource("../resources/styles/style.css").toExternalForm());
-            dialogPane.getStyleClass().add("alert");
+            getCss(missingInformation);
+            missingInformation.showAndWait();
+            return false;
+        }else if(endTime.isAfter(startTime.plusMinutes(30))){
+            Alert missingInformation = new Alert(Alert.AlertType.ERROR);
+            missingInformation.setTitle("Njoftim");
+            missingInformation.setContentText("Koha maksimale qe mund te caktoni per konsultim eshte 30 minuta.");
+            getCss(missingInformation);
             missingInformation.showAndWait();
             return false;
         }else if(startTime.isAfter(endTime) || startTime.equals(endTime)){
             Alert startEndConflict = new Alert(Alert.AlertType.ERROR);
             startEndConflict.setTitle("Konflikt");
             startEndConflict.setContentText("Koha e fillimit te konsultimit duhet te jete para kohes se mbarimit.");
-            startEndConflict.getDialogPane().getStylesheets().add(
-                    getClass().getResource("../resources/styles/style.css").toExternalForm());
-            startEndConflict.getDialogPane().setStyle("alert");
+            getCss(startEndConflict);
             startEndConflict.showAndWait();
             return false;
         } else if(!overlappingTimes()) {
@@ -221,24 +212,25 @@ public class AddApointmentController implements Initializable {
             appointments = AddAppointmentRepository.getAllKonsultimet();
             for (Konsultimet konsultimi : appointments) {
                 if (startDateTime.isAfter(konsultimi.getFillimi().minusMinutes(1)) && startDateTime.isBefore(konsultimi.getFundi())) {
-                    Alert overlapAlert = new Alert(Alert.AlertType.ERROR);
-                    overlapAlert.setTitle("Konflikt i konsultimeve");
-                    overlapAlert.setContentText("Ky konsultim nuk mund te caktohet sepse eshte ne konflikt me nje konsultim tjeter tek profesori " + konsultimi.getProfessor() + ", ne lenden " + konsultimi.getLenda());
-                    overlapAlert.getDialogPane().getStylesheets().add(getClass().getResource("../resources/styles/style.css").toExternalForm());
-                    overlapAlert.getDialogPane().setStyle("alert");
-                    overlapAlert.setHeight(300);
-                    overlapAlert.showAndWait();
-                    return false;
+                    if(konsultimi.getStudent().equals(studentName) || konsultimi.getProfessor().equals(profesoret.getSelectionModel().getSelectedItem())) {
+                        Alert overlapAlert = new Alert(Alert.AlertType.ERROR);
+                        overlapAlert.setTitle("Konflikt i konsultimeve");
+                        overlapAlert.setContentText("Ky konsultim nuk mund te caktohet sepse eshte ne konflikt me nje konsultim tjeter tek profesori "
+                                + konsultimi.getProfessor() + ", ne lenden " + konsultimi.getLenda());
+                        getCss(overlapAlert);
+                        overlapAlert.showAndWait();
+                        return false;
+                    }
                 } else if (endDateTime.isAfter(konsultimi.getFillimi().minusMinutes(1)) && endDateTime.isBefore(konsultimi.getFundi())) {
-                    Alert overlapAlert = new Alert(Alert.AlertType.ERROR);
-                    overlapAlert.setTitle("Konflikt i konsultimeve");
-                    overlapAlert.setContentText("Ky konsultim nuk mund te caktohet sepse eshte ne konflikt me nje konsultim tjeter tek profesori " + konsultimi.getProfessor() + ", ne lenden " + konsultimi.getLenda());
-                    overlapAlert.getDialogPane().getStylesheets().add(
-                            getClass().getResource("../resources/styles/style.css").toExternalForm());
-                    overlapAlert.getDialogPane().setStyle("alert");
-                    overlapAlert.setHeight(300);
-                    overlapAlert.showAndWait();
-                    return false;
+                    if(konsultimi.getStudent().equals(studentName) || konsultimi.getProfessor().equals(profesoret.getSelectionModel().getSelectedItem())) {
+                        Alert overlapAlert = new Alert(Alert.AlertType.ERROR);
+                        overlapAlert.setTitle("Konflikt i konsultimeve");
+                        overlapAlert.setContentText("Ky konsultim nuk mund te caktohet sepse eshte ne konflikt me nje konsultim tjeter tek profesori "
+                                + konsultimi.getProfessor() + ", ne lenden " + konsultimi.getLenda());
+                        getCss(overlapAlert);
+                        overlapAlert.showAndWait();
+                        return false;
+                    }
                 }
             }
         }catch(SQLException e){
@@ -247,6 +239,11 @@ public class AddApointmentController implements Initializable {
         return true;
     }
 
+    public void getCss(Alert alert){
+        alert.getDialogPane().getStylesheets().add(getClass().getResource("../resources/styles/style.css").toExternalForm());
+        alert.getDialogPane().setStyle("alert");
+        alert.setHeight(300);
+    }
     @FXML
         public void onSubmitButton(ActionEvent e)throws  Exception{
         try {
@@ -255,18 +252,14 @@ public class AddApointmentController implements Initializable {
                 Alert addAppointmentInformation = new Alert(Alert.AlertType.INFORMATION);
                 addAppointmentInformation.setTitle("Njoftim");
                 addAppointmentInformation.setContentText("Konsultimi u shtua me sukses!");
-                addAppointmentInformation.getDialogPane().getStylesheets().add(
-                        getClass().getResource("../resources/styles/style.css").toExternalForm());
-                addAppointmentInformation.getDialogPane().setStyle("alert");
+                getCss(addAppointmentInformation);
                 addAppointmentInformation.showAndWait();
             }
         }catch(Exception ex){
             Alert addAppointmentError = new Alert(Alert.AlertType.ERROR);
             addAppointmentError.setTitle("Gabim");
             addAppointmentError.setContentText("Deshtoi te shtoj konsultimin!");
-            addAppointmentError.getDialogPane().getStylesheets().add(
-                    getClass().getResource("../resources/styles/style.css").toExternalForm());
-            addAppointmentError.getDialogPane().setStyle("alert");
+            getCss(addAppointmentError);
             addAppointmentError.showAndWait();
             ex.printStackTrace();
         }
@@ -331,4 +324,24 @@ public class AddApointmentController implements Initializable {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
+
+
+    private void loadDisabledDaysFromDatabase() {
+        try{
+            String query = "SELECT day_of_week FROM disabled_days";
+            Connection conn = DbHelper.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(query);
+            ResultSet resultSet = stmt.executeQuery(query);
+            while (resultSet.next()) {
+                String dayOfWeek = resultSet.getString("day_of_week");
+                DayOfWeek disabledDay = DayOfWeek.valueOf(dayOfWeek);
+                disabledDaysOfWeek.add(disabledDay);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

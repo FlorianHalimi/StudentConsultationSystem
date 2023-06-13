@@ -82,7 +82,6 @@ public class PieChartController extends ChildController{
         return pieChart;
     }
     private PieChart datePieChart() throws Exception {
-
         timeList = StatisticsRepository.getTimeList(professor);
         PieChart datepieChart = new PieChart();
         datepieChart.setTitle("Statistikat e konsultimeve sipas dates!");

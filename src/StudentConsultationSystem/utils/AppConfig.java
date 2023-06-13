@@ -21,7 +21,7 @@ public class AppConfig {
     }
 
     public String getAppName(){
-        return props.getProperty("appname", "SIMKS");
+        return props.getProperty("appname", "SIMK");
     }
     public String getConnectionString(){
         return props.getProperty("connectionString");

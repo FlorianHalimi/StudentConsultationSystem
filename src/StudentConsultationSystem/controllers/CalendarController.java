@@ -134,7 +134,7 @@ private Konsultimet parseRes(ResultSet res) throws SQLException {
                     konsultimet.add(parseRes(res));
                 }
             }catch(Exception ex){
-                ErrorPopupComponent.show(ex);
+                ex.printStackTrace();
             }
         }else{
             String sql = "select * from konsultimet where Profesori = '" + professorName + "' and DATE(fillimi) > CURDATE();";
@@ -147,7 +147,7 @@ private Konsultimet parseRes(ResultSet res) throws SQLException {
                     konsultimet.add(parseRes(res));
                 }
             }catch(Exception ex){
-                ErrorPopupComponent.show(ex);
+                ex.printStackTrace();
             }
         }
         return konsultimet;
@@ -203,6 +203,11 @@ private Konsultimet parseRes(ResultSet res) throws SQLException {
         fillTables();
     }
 
+    public void getCss(Alert alert){
+        alert.getDialogPane().getStylesheets().add(getClass().getResource("../resources/styles/style.css").toExternalForm());
+        alert.getDialogPane().setStyle("alert");
+        alert.setHeight(300);
+    }
     @FXML
     public void onCancelButtonClick(ActionEvent e) throws Exception {
         Konsultimet selectedItem = otherDaysTableView.getSelectionModel().getSelectedItem();
@@ -212,10 +217,7 @@ private Konsultimet parseRes(ResultSet res) throws SQLException {
         Alert deleteConfirmation = new Alert(Alert.AlertType.CONFIRMATION);
         deleteConfirmation.setTitle("Konfirmimi i anulimit");
         deleteConfirmation.setContentText("A jeni te sigurt qe doni te anuloni kete konsultim?");
-        DialogPane dialogPane = deleteConfirmation.getDialogPane();
-        dialogPane.getStylesheets().add(
-                getClass().getResource("../resources/styles/style.css").toExternalForm());
-        dialogPane.getStyleClass().add("alert");
+        getCss(deleteConfirmation);
         Optional<ButtonType> result = deleteConfirmation.showAndWait();
 
         if (result.isPresent() && result.get() == ButtonType.OK) {
@@ -227,10 +229,7 @@ private Konsultimet parseRes(ResultSet res) throws SQLException {
             appointmentCancellation.setContentText(appointmentCancellationContext);
             otherDaysTableView.getItems().remove(selectedIndex);
             allAppointments.remove(selectedItem);
-            dialogPane = appointmentCancellation.getDialogPane();
-            dialogPane.getStylesheets().add(
-                    getClass().getResource("../resources/styles/style.css").toExternalForm());
-            dialogPane.getStyleClass().add("alert");
+            getCss(appointmentCancellation);
             appointmentCancellation.showAndWait();
 
             try {
@@ -246,10 +245,7 @@ private Konsultimet parseRes(ResultSet res) throws SQLException {
                 Alert notify = new Alert(Alert.AlertType.INFORMATION);
                 notify.setTitle("Informacion");
                 notify.setContentText("Ju duhet te tregoni arsyen e anulimit te konsulimit.");
-                dialogPane = notify.getDialogPane();
-                dialogPane.getStylesheets().add(
-                        getClass().getResource("../resources/styles/style.css").toExternalForm());
-                dialogPane.getStyleClass().add("alert");
+                getCss(notify);
                 notify.showAndWait();
             } catch (Exception ex) {
                 ex.printStackTrace();
